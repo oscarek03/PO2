@@ -7,6 +7,7 @@
         <entry key="Styles/AppDefaultStyles.axaml" value="AnimalShelter.csproj" />
         <entry key="Views/AdoptionsPageView.axaml" value="AnimalShelter.csproj" />
         <entry key="Views/AdoptionsPageViewModel.axaml" value="AnimalShelter.csproj" />
+        <entry key="Views/AnimalEditDialog.axaml" value="AnimalShelter.csproj" />
         <entry key="Views/AnimalsPageView.axaml" value="AnimalShelter.csproj" />
         <entry key="Views/AnimalsPageViewModel.axaml" value="AnimalShelter.csproj" />
         <entry key="Views/MainView.axaml" value="AnimalShelter.csproj" />

@@ -17,6 +17,10 @@ public class Adoption
     public Address? Address { get; set; }
     public string? AnimalSpecies => Animal?.Species;
     public string? AnimalName => Animal?.Name;
+    public string? AddressStreetAddress => Address?.StreetAddress;
+    public string? AddressCity => Address?.City;
+    public string? AddressPostalCode => Address?.PostalCode;
+    public string? AddressCountry => Address?.Country;
     
 
 }

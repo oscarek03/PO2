@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using AnimalShelter.Models;
 using AnimalShelter.Data.Seeders;
+using System;
 
 namespace AnimalShelter.Data
 {
@@ -27,6 +28,22 @@ namespace AnimalShelter.Data
             ScheduleSeeder.Seed(modelBuilder);
             DonationSeeder.Seed(modelBuilder);
             VolunteerSeeder.Seed(modelBuilder);
+
+            // Konwersja DateTime -> UTC dla timestamp with time zone
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
+                    {
+                        property.SetValueConverter(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<DateTime, DateTime>(
+                            v => DateTime.SpecifyKind(v, DateTimeKind.Utc),  
+                            v => DateTime.SpecifyKind(v, DateTimeKind.Utc)  
+                        ));
+                    }
+                }
+            }
         }
+
     }
 }

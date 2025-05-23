@@ -22,7 +22,6 @@
     <Style Selector="DataGridRow:selected">
         <Setter Property="Background" Value="#99ff99"/>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontWeight" Value="Bold"/>
     </Style>
     
     <Style Selector="Button:pointerover /template/ ContentPresenter">

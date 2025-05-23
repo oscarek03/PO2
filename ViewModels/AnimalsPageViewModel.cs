@@ -12,6 +12,13 @@ public partial class AnimalsPageViewModel : ViewModelBase
 
     public ObservableCollection<Animal> Animals { get; set; } = new();
 
+    private Animal? _selectedAnimal;
+    public Animal? SelectedAnimal
+    {
+        get => _selectedAnimal;
+        set => SetProperty(ref _selectedAnimal, value);
+    }
+
     public AnimalsPageViewModel(AnimalShelterDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -20,15 +27,39 @@ public partial class AnimalsPageViewModel : ViewModelBase
 
     private void LoadAnimals()
     {
-        // Ensure DB is created
         _dbContext.Database.EnsureCreated();
-
-        var animalsFromDb = _dbContext.Animals.ToList();
-
         Animals.Clear();
-        foreach (var animal in animalsFromDb)
+        foreach (var animal in _dbContext.Animals.ToList())
         {
             Animals.Add(animal);
+        }
+    }
+
+    public void AddAnimal(Animal newAnimal)
+    {
+        _dbContext.Animals.Add(newAnimal);
+        _dbContext.SaveChanges();
+        Animals.Add(newAnimal);
+    }
+
+    public void UpdateAnimal(Animal updatedAnimal)
+    {
+        var animal = _dbContext.Animals.Find(updatedAnimal.Id);
+        if (animal != null)
+        {
+            _dbContext.Entry(animal).CurrentValues.SetValues(updatedAnimal);
+            _dbContext.SaveChanges();
+            LoadAnimals();
+        }
+    }
+
+    public void DeleteAnimal(Animal animalToDelete)
+    {
+        if (animalToDelete != null)
+        {
+            _dbContext.Animals.Remove(animalToDelete);
+            _dbContext.SaveChanges();
+            Animals.Remove(animalToDelete);
         }
     }
 }
