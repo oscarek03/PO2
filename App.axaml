@@ -11,5 +11,13 @@
   
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="Styles/AppDefaultStyles.axaml"></StyleInclude>
     </Application.Styles>
+             
+    <Application.Resources>
+        <SolidColorBrush x:Key="PrimaryBackground">#E5E7EB</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryNavbarBackground">#FAFAFA</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryText">#000000</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryHover">#F1F1F1</SolidColorBrush>
+    </Application.Resources>
 </Application>

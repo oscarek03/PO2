@@ -32,5 +32,8 @@ build_property.EnableCodeStyleSeverity =
 [C:/Users/oszcz/Desktop/AnimalShelter/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/oszcz/Desktop/AnimalShelter/Styles/AppDefaultStyles.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/oszcz/Desktop/AnimalShelter/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

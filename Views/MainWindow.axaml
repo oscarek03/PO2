@@ -3,18 +3,58 @@
         xmlns:vm="using:AnimalShelter.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="600"
+        Width="1024" Height="600"
         x:Class="AnimalShelter.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
         Title="AnimalShelter">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+    <Grid Background="{DynamicResource PrimaryBackground}" ColumnDefinitions="Auto, *">
+        <Border Padding="20"
+                Background="{DynamicResource PrimaryNavbarBackground}"
+                BoxShadow="6 0 12 #44000000">
+            <Grid RowDefinitions="*, Auto">
+                <StackPanel Spacing="12">
+                    <Button HorizontalAlignment="Stretch" Padding="10">
+                        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                            <Image Source="avares://AnimalShelter/Assets/Images/Dog.png" Width="40" Height="40"/>
+                            <TextBlock VerticalAlignment="Center" Text="Animals"/>
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" Padding="10">
+                        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                            <Image Source="avares://AnimalShelter/Assets/Images/Heart.png" Width="35" Height="35"/>
+                            <TextBlock VerticalAlignment="Center" Text="Adoptions"/>
+                        </StackPanel>
+                    </Button>
+                    <Button HorizontalAlignment="Stretch" Padding="10">
+                        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                            <Image Source="avares://AnimalShelter/Assets/Images/Schedule.png" Width="35" Height="35"/>
+                            <TextBlock VerticalAlignment="Center" Text="Schedule"/>
+                        </StackPanel>
+                    </Button>                    
+                    <Button HorizontalAlignment="Stretch" Padding="10">
+                        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                            <Image Source="avares://AnimalShelter/Assets/Images/Statistics.png" Width="35" Height="35"/>
+                            <TextBlock VerticalAlignment="Center" Text="Statistics"/>
+                        </StackPanel>
+                    </Button> 
+                    <Button HorizontalAlignment="Stretch" Padding="10">
+                        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                            <Image Source="avares://AnimalShelter/Assets/Images/Volunteers.png" Width="35" Height="35"/>
+                            <TextBlock VerticalAlignment="Center" Text="Volunteers"/>
+                        </StackPanel>
+                    </Button> 
+                </StackPanel>
+                <Button Grid.Row="1" HorizontalAlignment="Stretch" Padding="10">
+                    <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                        <Image Source="avares://AnimalShelter/Assets/Images/Settings.png" Width="35" Height="35"/>
+                        <TextBlock VerticalAlignment="Center" Text="Settings"/>
+                    </StackPanel>
+                </Button> 
+            </Grid>
+        </Border>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+    </Grid>
+    
 </Window>
