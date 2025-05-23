@@ -14,6 +14,7 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        DataTemplates.Add(new ViewLocator());
     }
 
     public override void OnFrameworkInitializationCompleted()
@@ -23,9 +24,9 @@ public partial class App : Application
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new MainWindow
+            desktop.MainWindow = new MainView
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = new MainViewModel(),
             };
         }
 

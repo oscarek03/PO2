@@ -19,5 +19,11 @@
         <Setter Property="Background" Value="{DynamicResource PrimaryHover}"></Setter>
     </Style>
     
+    <Style Selector="Button.active /template/ ContentPresenter">
+        <Setter Property="FontSize" Value="20"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextHover}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"></Setter>
+    </Style>
+    
     
 </Styles>
