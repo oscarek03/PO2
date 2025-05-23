@@ -18,6 +18,7 @@
         <SolidColorBrush x:Key="PrimaryBackground">#E5E7EB</SolidColorBrush>
         <SolidColorBrush x:Key="PrimaryNavbarBackground">#FAFAFA</SolidColorBrush>
         <SolidColorBrush x:Key="PrimaryText">#000000</SolidColorBrush>
-        <SolidColorBrush x:Key="PrimaryHover">#F1F1F1</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryTextHover">#FFFFFF</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryHover">#87c498</SolidColorBrush>
     </Application.Resources>
 </Application>
