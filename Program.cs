@@ -1,21 +1,56 @@
 ﻿using Avalonia;
 using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using AnimalShelter.Data;
+using AnimalShelter.ViewModels;
 
 namespace AnimalShelter;
 
 sealed class Program
 {
-    // Initialization code. Don't use any Avalonia, third-party APIs or any
-    // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-    // yet and stuff might break.
     [STAThread]
-    public static void Main(string[] args) => BuildAvaloniaApp()
-        .StartWithClassicDesktopLifetime(args);
+    public static void Main(string[] args)
+    {
+        // Wczytanie konfiguracji (np. appsettings.json)
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-    // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp()
+        IConfiguration configuration = builder.Build();
+
+        // Rejestracja usług w kontenerze DI
+        var services = new ServiceCollection();
+
+        // Baza danych
+        services.AddDbContext<AnimalShelterDbContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+        // ViewModele
+        services.AddSingleton<MainViewModel>();
+        services.AddTransient<AnimalsPageViewModel>();
+        services.AddTransient<AdoptionsPageViewModel>();
+        services.AddTransient<SchedulePageViewModel>();
+        services.AddTransient<StatisticsPageViewModel>();
+        services.AddTransient<SettingsPageViewModel>();
+        services.AddTransient<VolunteersPageViewModel>();
+
+        // Budowanie kontenera
+        var serviceProvider = services.BuildServiceProvider();
+
+        // Start Avalonia z DI
+        BuildAvaloniaApp(serviceProvider)
+            .StartWithClassicDesktopLifetime(args);
+    }
+
+    public static AppBuilder BuildAvaloniaApp(IServiceProvider serviceProvider)
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
-            .LogToTrace();
+            .LogToTrace()
+            .AfterSetup(_ =>
+            {
+                App.ServiceProvider = serviceProvider;
+            });
 }

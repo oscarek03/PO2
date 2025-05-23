@@ -9,6 +9,7 @@
         <entry key="Views/AdoptionsPageViewModel.axaml" value="AnimalShelter.csproj" />
         <entry key="Views/AnimalsPageView.axaml" value="AnimalShelter.csproj" />
         <entry key="Views/AnimalsPageViewModel.axaml" value="AnimalShelter.csproj" />
+        <entry key="Views/MainView.axaml" value="AnimalShelter.csproj" />
         <entry key="Views/MainWindow.axaml" value="AnimalShelter.csproj" />
         <entry key="Views/SchedulePageView.axaml" value="AnimalShelter.csproj" />
         <entry key="Views/SettingsPageView.axaml" value="AnimalShelter.csproj" />

@@ -2,8 +2,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             Foreground="Black"
-             x:Class="AnimalShelter.Views.VolunteersPageView">
-    Welcome to Volunteers!
+             xmlns:vm="clr-namespace:AnimalShelter.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="AnimalShelter.Views.VolunteersPageView"
+             x:DataType="vm:VolunteersPageViewModel"
+             Foreground="Black">
+             
+    <DataGrid Margin="20"
+              ItemsSource="{Binding Volunteers}"
+              AutoGenerateColumns="False"
+              GridLinesVisibility="All"
+              BorderThickness="1"
+              BorderBrush="Gray"
+              IsReadOnly="True">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="FullName" Binding="{Binding FullName}" Width="*" />
+            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+            <DataGridTextColumn Header="PhoneNumber" Binding="{Binding PhoneNumber}" Width="*" />
+            <DataGridTextColumn Header="AdditionalNotes" Binding="{Binding AdditionalNotes}" Width="*" />
+        </DataGrid.Columns>
+    </DataGrid>
 </UserControl>

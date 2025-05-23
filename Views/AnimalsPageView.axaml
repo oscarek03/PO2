@@ -2,8 +2,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             Foreground="Black"
-             x:Class="AnimalShelter.Views.AnimalsPageView">
-    Welcome to Animals!
+             xmlns:vm="clr-namespace:AnimalShelter.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="AnimalShelter.Views.AnimalsPageView"
+             x:DataType="vm:AnimalsPageViewModel"
+             Foreground="Black">
+
+    <DataGrid Margin="20"
+              ItemsSource="{Binding Animals}"
+              AutoGenerateColumns="False"
+              GridLinesVisibility="All"
+              BorderThickness="1"
+              BorderBrush="Gray"
+              IsReadOnly="True">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Species" Binding="{Binding Species}" Width="*" />
+            <DataGridTextColumn Header="Breed" Binding="{Binding Breed}" Width="*" />
+            <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="*" />
+            <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="*" />
+            <DataGridTextColumn Header="Color" Binding="{Binding Color}" Width="*" />
+            <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="*" />
+            <DataGridTextColumn Header="Microchip" Binding="{Binding Microchip}" Width="*" />
+            <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="*" />
+            <DataGridTextColumn Header="IsAdopted" Binding="{Binding IsAdopted}" Width="*" />
+        </DataGrid.Columns>
+    </DataGrid>
+
 </UserControl>

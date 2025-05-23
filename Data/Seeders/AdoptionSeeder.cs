@@ -17,7 +17,7 @@ namespace AnimalShelter.Data.Seeders
                     Email = "jan.kowalski@example.com",
                     PhoneNumber = "123456789",
                     AdoptionDate = DateTime.SpecifyKind(new DateTime(2024, 5, 1), DateTimeKind.Utc),
-                    IdAddress = 1,
+                    AddressId = 1,
                     Notes = "Brak uwag"
                 },
                 new Adoption
@@ -28,7 +28,7 @@ namespace AnimalShelter.Data.Seeders
                     Email = "anna.nowak@example.com",
                     PhoneNumber = "987654321",
                     AdoptionDate = DateTime.SpecifyKind(new DateTime(2024, 5, 15), DateTimeKind.Utc),
-                    IdAddress = 3,
+                    AddressId = 3,
                     Notes = "Adopcja przebiegła pomyślnie"
                 },
                 new Adoption
@@ -39,7 +39,7 @@ namespace AnimalShelter.Data.Seeders
                     Email = "piotr.zielinski@example.com",
                     PhoneNumber = "555666777",
                     AdoptionDate = DateTime.SpecifyKind(new DateTime(2024, 6, 2), DateTimeKind.Utc),
-                    IdAddress = 5,
+                    AddressId = 5,
                     Notes = "Nowy dom z ogrodem"
                 }
             );

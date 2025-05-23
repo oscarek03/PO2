@@ -13,7 +13,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+
+    <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.2.7" />
+        <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.7" />
         <PackageReference Include="Avalonia.Desktop" Version="11.2.7" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.2.7" />
         <PackageReference Include="Avalonia.Svg.Skia" Version="11.2.7" />

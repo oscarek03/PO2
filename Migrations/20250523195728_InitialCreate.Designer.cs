@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AnimalShelter.Migrations
 {
     [DbContext(typeof(AnimalShelterDbContext))]
-    [Migration("20250522215724_Init")]
-    partial class Init
+    [Migration("20250523195728_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,7 +120,7 @@ namespace AnimalShelter.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AddressId")
+                    b.Property<int>("AddressId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("AdoptionDate")
@@ -134,9 +134,6 @@ namespace AnimalShelter.Migrations
 
                     b.Property<string>("FullName")
                         .HasColumnType("text");
-
-                    b.Property<int>("IdAddress")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Notes")
                         .HasColumnType("text");
@@ -156,33 +153,33 @@ namespace AnimalShelter.Migrations
                         new
                         {
                             Id = 1,
+                            AddressId = 1,
                             AdoptionDate = new DateTime(2024, 5, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             AnimalId = 1,
                             Email = "jan.kowalski@example.com",
                             FullName = "Jan Kowalski",
-                            IdAddress = 1,
                             Notes = "Brak uwag",
                             PhoneNumber = "123456789"
                         },
                         new
                         {
                             Id = 2,
+                            AddressId = 3,
                             AdoptionDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             AnimalId = 9,
                             Email = "anna.nowak@example.com",
                             FullName = "Anna Nowak",
-                            IdAddress = 3,
                             Notes = "Adopcja przebiegła pomyślnie",
                             PhoneNumber = "987654321"
                         },
                         new
                         {
                             Id = 3,
+                            AddressId = 5,
                             AdoptionDate = new DateTime(2024, 6, 2, 0, 0, 0, 0, DateTimeKind.Utc),
                             AnimalId = 4,
                             Email = "piotr.zielinski@example.com",
                             FullName = "Piotr Zieliński",
-                            IdAddress = 5,
                             Notes = "Nowy dom z ogrodem",
                             PhoneNumber = "555666777"
                         });
@@ -217,6 +214,9 @@ namespace AnimalShelter.Migrations
                     b.Property<string>("Microchip")
                         .HasColumnType("text");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
                     b.Property<string>("Size")
                         .HasColumnType("text");
 
@@ -232,14 +232,29 @@ namespace AnimalShelter.Migrations
                         {
                             Id = 1,
                             Age = 3,
-                            Breed = "Labrador",
+                            Breed = "Mieszaniec",
                             Color = "Czarny",
                             Gender = "Samiec",
-                            IsAdopted = false,
+                            IsAdopted = true,
                             Location = "Boks 1",
                             Microchip = "1234567890",
+                            Name = "Kajtek",
                             Size = "Duży",
                             Species = "Pies"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Age = 2,
+                            Breed = "Europejski",
+                            Color = "Szary",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 2",
+                            Microchip = "0987654321",
+                            Name = "Luna",
+                            Size = "Mały",
+                            Species = "Kot"
                         },
                         new
                         {
@@ -251,6 +266,7 @@ namespace AnimalShelter.Migrations
                             IsAdopted = false,
                             Location = "Boks 3",
                             Microchip = "2233445566",
+                            Name = "Sara",
                             Size = "Duży",
                             Species = "Pies"
                         },
@@ -261,9 +277,10 @@ namespace AnimalShelter.Migrations
                             Breed = "Beagle",
                             Color = "Tricolor",
                             Gender = "Samiec",
-                            IsAdopted = false,
+                            IsAdopted = true,
                             Location = "Boks 4",
                             Microchip = "3344556677",
+                            Name = "Benio",
                             Size = "Średni",
                             Species = "Pies"
                         },
@@ -271,12 +288,13 @@ namespace AnimalShelter.Migrations
                         {
                             Id = 5,
                             Age = 5,
-                            Breed = "Golden Retriever",
+                            Breed = "Mieszaniec",
                             Color = "Złoty",
                             Gender = "Samica",
                             IsAdopted = false,
                             Location = "Boks 5",
                             Microchip = "4455667788",
+                            Name = "Mila",
                             Size = "Duży",
                             Species = "Pies"
                         },
@@ -290,6 +308,7 @@ namespace AnimalShelter.Migrations
                             IsAdopted = false,
                             Location = "Boks 6",
                             Microchip = "5566778899",
+                            Name = "Gucio",
                             Size = "Średni",
                             Species = "Pies"
                         },
@@ -297,12 +316,13 @@ namespace AnimalShelter.Migrations
                         {
                             Id = 7,
                             Age = 3,
-                            Breed = "Sznaucer",
+                            Breed = "Mieszaniec",
                             Color = "Srebrny",
                             Gender = "Samica",
                             IsAdopted = false,
                             Location = "Boks 7",
                             Microchip = "6677889900",
+                            Name = "Tosia",
                             Size = "Mały",
                             Species = "Pies"
                         },
@@ -316,21 +336,9 @@ namespace AnimalShelter.Migrations
                             IsAdopted = false,
                             Location = "Boks 8",
                             Microchip = "7788990011",
+                            Name = "Felek",
                             Size = "Mały",
                             Species = "Pies"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Age = 2,
-                            Breed = "Europejski",
-                            Color = "Szary",
-                            Gender = "Samica",
-                            IsAdopted = false,
-                            Location = "Boks 2",
-                            Microchip = "0987654321",
-                            Size = "Mały",
-                            Species = "Kot"
                         },
                         new
                         {
@@ -339,9 +347,10 @@ namespace AnimalShelter.Migrations
                             Breed = "Syjamski",
                             Color = "Biały",
                             Gender = "Samiec",
-                            IsAdopted = false,
+                            IsAdopted = true,
                             Location = "Boks 9",
                             Microchip = "8899001122",
+                            Name = "Leo",
                             Size = "Mały",
                             Species = "Kot"
                         },
@@ -349,12 +358,13 @@ namespace AnimalShelter.Migrations
                         {
                             Id = 10,
                             Age = 3,
-                            Breed = "Perski",
+                            Breed = "Mieszaniec",
                             Color = "Biały",
                             Gender = "Samica",
                             IsAdopted = false,
                             Location = "Boks 10",
                             Microchip = "9900112233",
+                            Name = "Klara",
                             Size = "Mały",
                             Species = "Kot"
                         },
@@ -368,6 +378,7 @@ namespace AnimalShelter.Migrations
                             IsAdopted = false,
                             Location = "Boks 11",
                             Microchip = "1011121314",
+                            Name = "Rufus",
                             Size = "Duży",
                             Species = "Kot"
                         },
@@ -375,12 +386,13 @@ namespace AnimalShelter.Migrations
                         {
                             Id = 12,
                             Age = 2,
-                            Breed = "Bengalski",
+                            Breed = "Mieszaniec",
                             Color = "Pręgowany",
                             Gender = "Samica",
                             IsAdopted = false,
                             Location = "Boks 12",
                             Microchip = "1213141516",
+                            Name = "Zoe",
                             Size = "Średni",
                             Species = "Kot"
                         },
@@ -394,6 +406,7 @@ namespace AnimalShelter.Migrations
                             IsAdopted = false,
                             Location = "Boks 13",
                             Microchip = "1314151617",
+                            Name = "Neo",
                             Size = "Mały",
                             Species = "Kot"
                         },
@@ -401,12 +414,13 @@ namespace AnimalShelter.Migrations
                         {
                             Id = 14,
                             Age = 3,
-                            Breed = "Rosyjski niebieski",
+                            Breed = "Mieszaniec",
                             Color = "Niebieski",
                             Gender = "Samica",
                             IsAdopted = false,
                             Location = "Boks 14",
                             Microchip = "1415161718",
+                            Name = "Nina",
                             Size = "Mały",
                             Species = "Kot"
                         },
@@ -420,6 +434,7 @@ namespace AnimalShelter.Migrations
                             IsAdopted = false,
                             Location = "Boks 15",
                             Microchip = "1516171819",
+                            Name = "Czarek",
                             Size = "Mały",
                             Species = "Kot"
                         });
@@ -594,11 +609,8 @@ namespace AnimalShelter.Migrations
                     b.Property<string>("AdditionalNotes")
                         .HasColumnType("text");
 
-                    b.Property<int?>("Availability")
+                    b.Property<int>("AddressId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("City")
-                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
@@ -609,16 +621,9 @@ namespace AnimalShelter.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("Roles")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("StreetAddress")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.ToTable("Volunteers");
 
@@ -627,105 +632,73 @@ namespace AnimalShelter.Migrations
                         {
                             Id = 1,
                             AdditionalNotes = "Może pracować w weekendy",
-                            Availability = 3,
-                            City = "Gdańsk",
+                            AddressId = 7,
                             Email = "piotr.zielinski@example.com",
                             FullName = "Piotr Zieliński",
-                            PhoneNumber = "555666777",
-                            PostalCode = "80-001",
-                            Roles = 1,
-                            StreetAddress = "ul. Polna 3"
+                            PhoneNumber = "555666777"
                         },
                         new
                         {
                             Id = 2,
                             AdditionalNotes = "Dostępna popołudniami",
-                            Availability = 2,
-                            City = "Warszawa",
+                            AddressId = 6,
                             Email = "anna.maj@example.com",
                             FullName = "Anna Maj",
-                            PhoneNumber = "600700800",
-                            PostalCode = "00-002",
-                            Roles = 2,
-                            StreetAddress = "ul. Wiosenna 4"
+                            PhoneNumber = "600700800"
                         },
                         new
                         {
                             Id = 3,
                             AdditionalNotes = "Może pracować tylko w poniedziałki",
-                            Availability = 1,
-                            City = "Kraków",
+                            AddressId = 1,
                             Email = "tomasz.nowak@example.com",
                             FullName = "Tomasz Nowak",
-                            PhoneNumber = "601701801",
-                            PostalCode = "30-003",
-                            Roles = 1,
-                            StreetAddress = "ul. Jesienna 8"
+                            PhoneNumber = "601701801"
                         },
                         new
                         {
                             Id = 4,
                             AdditionalNotes = "Lubi pracować ze zwierzętami starszymi",
-                            Availability = 2,
-                            City = "Poznań",
+                            AddressId = 1,
                             Email = "karolina.wisniewska@example.com",
                             FullName = "Karolina Wiśniewska",
-                            PhoneNumber = "602702802",
-                            PostalCode = "60-004",
-                            Roles = 3,
-                            StreetAddress = "ul. Letnia 12"
+                            PhoneNumber = "602702802"
                         },
                         new
                         {
                             Id = 5,
                             AdditionalNotes = "Dostępny w weekendy",
-                            Availability = 3,
-                            City = "Wrocław",
+                            AddressId = 2,
                             Email = "marek.lewandowski@example.com",
                             FullName = "Marek Lewandowski",
-                            PhoneNumber = "603703803",
-                            PostalCode = "50-005",
-                            Roles = 2,
-                            StreetAddress = "ul. Zimowa 16"
+                            PhoneNumber = "603703803"
                         },
                         new
                         {
                             Id = 6,
                             AdditionalNotes = "Może pomagać przy adopcjach",
-                            Availability = 1,
-                            City = "Lublin",
+                            AddressId = 3,
                             Email = "ewa.kaczmarek@example.com",
                             FullName = "Ewa Kaczmarek",
-                            PhoneNumber = "604704804",
-                            PostalCode = "20-006",
-                            Roles = 1,
-                            StreetAddress = "ul. Spacerowa 20"
+                            PhoneNumber = "604704804"
                         },
                         new
                         {
                             Id = 7,
                             AdditionalNotes = "Zainteresowany opieką nad psami",
-                            Availability = 2,
-                            City = "Zakopane",
+                            AddressId = 4,
                             Email = "grzegorz.lis@example.com",
                             FullName = "Grzegorz Lis",
-                            PhoneNumber = "605705805",
-                            PostalCode = "34-500",
-                            Roles = 3,
-                            StreetAddress = "ul. Zielona 3"
+                            PhoneNumber = "605705805"
                         },
                         new
                         {
                             Id = 8,
                             AdditionalNotes = "Pomoc w organizacji wydarzeń",
-                            Availability = 3,
-                            City = "Gdynia",
+                            AddressId = 5,
                             Email = "magdalena.bak@example.com",
                             FullName = "Magdalena Bąk",
-                            PhoneNumber = "606706806",
-                            PostalCode = "81-007",
-                            Roles = 2,
-                            StreetAddress = "ul. Słoneczna 10"
+                            PhoneNumber = "606706806"
                         });
                 });
 
@@ -733,7 +706,9 @@ namespace AnimalShelter.Migrations
                 {
                     b.HasOne("AnimalShelter.Models.Address", "Address")
                         .WithMany("Adoptions")
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AnimalShelter.Models.Animal", "Animal")
                         .WithMany("Adoptions")
@@ -744,6 +719,17 @@ namespace AnimalShelter.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("Animal");
+                });
+
+            modelBuilder.Entity("AnimalShelter.Models.Volunteer", b =>
+                {
+                    b.HasOne("AnimalShelter.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("AnimalShelter.Models.Address", b =>
