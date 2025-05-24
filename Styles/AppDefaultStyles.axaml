@@ -36,5 +36,17 @@
         <Setter Property="Background" Value="{DynamicResource PrimaryActiveBackground}"></Setter>
     </Style>
     
+    <Style Selector="TextBox">
+        <Setter Property="FontSize" Value="15"></Setter>
+        <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="Background" Value="White"></Setter>
+    </Style>
+    
+    <Style Selector="ComboBox">
+        <Setter Property="FontSize" Value="15"></Setter>
+        <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="Background" Value="White"></Setter>
+    </Style>
+    
     
 </Styles>

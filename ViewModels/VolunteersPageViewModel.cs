@@ -12,6 +12,13 @@ public partial class VolunteersPageViewModel : ViewModelBase
 
     public ObservableCollection<Volunteer> Volunteers { get; set; } = new();
 
+    private Volunteer? _selectedVolunteer;
+    public Volunteer? SelectedVolunteer
+    {
+        get => _selectedVolunteer;
+        set => SetProperty(ref _selectedVolunteer, value);
+    }
+
     public VolunteersPageViewModel(AnimalShelterDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -20,15 +27,39 @@ public partial class VolunteersPageViewModel : ViewModelBase
 
     private void LoadVolunteers()
     {
-        // Ensure DB is created
         _dbContext.Database.EnsureCreated();
-
-        var volunteersFromDb = _dbContext.Volunteers.ToList();
-
         Volunteers.Clear();
-        foreach (var animal in volunteersFromDb)
+        foreach (var volunteer in _dbContext.Volunteers.ToList())
         {
-            Volunteers.Add(animal);
+            Volunteers.Add(volunteer);
+        }
+    }
+
+    public void AddVolunteer(Volunteer newVolunteer)
+    {
+        _dbContext.Volunteers.Add(newVolunteer);
+        _dbContext.SaveChanges();
+        Volunteers.Add(newVolunteer);
+    }
+
+    public void UpdateVolunteer(Volunteer updatedVolunteer)
+    {
+        var volunteer = _dbContext.Volunteers.Find(updatedVolunteer.Id);
+        if (volunteer != null)
+        {
+            _dbContext.Entry(volunteer).CurrentValues.SetValues(updatedVolunteer);
+            _dbContext.SaveChanges();
+            LoadVolunteers();
+        }
+    }
+
+    public void DeleteVolunteer(Volunteer volunteerToDelete)
+    {
+        if (volunteerToDelete != null)
+        {
+            _dbContext.Volunteers.Remove(volunteerToDelete);
+            _dbContext.SaveChanges();
+            Volunteers.Remove(volunteerToDelete);
         }
     }
 }

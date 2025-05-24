@@ -37,16 +37,16 @@
 
         <!-- Przyciski -->
         <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Spacing="10">
-            <Button Content="Usuń zaznaczoną"
+            <Button Content="Delete Selected"
                     IsEnabled="{Binding SelectedAdoption, Converter={StaticResource NullToBoolConverter}}"
                     Click="OnDeleteAdoption" />
         </StackPanel>
 
         <!-- Formularz dodawania adopcji -->
         <StackPanel Margin="0,20,0,0" Orientation="Vertical" Spacing="10">
-            <TextBlock Text="Dodaj nową adopcję" FontWeight="Bold" FontSize="16"/>
+            <TextBlock Text="Add New Adoption" FontWeight="Bold" FontSize="16"/>
 
-            <TextBlock Text="Zwierzę do adopcji:"/>
+            <TextBlock Text="Select Animal:"/>
             <ComboBox ItemsSource="{Binding AvailableAnimals}" SelectedItem="{Binding SelectedAnimal}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -55,7 +55,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <TextBlock Text="Adres (wybierz istniejący):"/>
+            <TextBlock Text="Address (Select Existing):"/>
             <ComboBox ItemsSource="{Binding ExistingAddresses}" SelectedItem="{Binding SelectedAddress}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -64,35 +64,35 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <CheckBox Content="Wpisz nowy adres" IsChecked="{Binding IsNewAddressVisible}" />
+            <CheckBox Foreground="Black" Content="Type New Address" IsChecked="{Binding IsNewAddressVisible}" />
 
             <StackPanel IsVisible="{Binding IsNewAddressVisible}">
-                <TextBlock Text="Ulica:"/>
+                <TextBlock Text="Street:"/>
                 <TextBox Text="{Binding NewAddress.StreetAddress}"/>
 
-                <TextBlock Text="Miasto:"/>
+                <TextBlock Text="City:"/>
                 <TextBox Text="{Binding NewAddress.City}"/>
 
-                <TextBlock Text="Kod pocztowy:"/>
+                <TextBlock Text="Postal Code:"/>
                 <TextBox Text="{Binding NewAddress.PostalCode}"/>
 
-                <TextBlock Text="Kraj:"/>
+                <TextBlock Text="Country:"/>
                 <TextBox Text="{Binding NewAddress.Country}"/>
             </StackPanel>
 
-            <TextBlock Text="Pełne imię:"/>
+            <TextBlock Text="Full Name:"/>
             <TextBox Text="{Binding NewAdoption.FullName}"/>
 
             <TextBlock Text="Email:"/>
             <TextBox Text="{Binding NewAdoption.Email}"/>
 
-            <TextBlock Text="Numer telefonu:"/>
+            <TextBlock Text="Phone Number:"/>
             <TextBox Text="{Binding NewAdoption.PhoneNumber}"/>
 
-            <TextBlock Text="Notatki:"/>
+            <TextBlock Text="Notes:"/>
             <TextBox Text="{Binding NewAdoption.Notes}" AcceptsReturn="True" Height="60"/>
 
-            <Button Content="Dodaj adopcję"
+            <Button Content="Add Adoption"
                     Width="150"
                     HorizontalAlignment="Left"
                     Click="OnAddAdoption"/>

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AnimalShelter.Migrations
 {
     [DbContext(typeof(AnimalShelterDbContext))]
-    [Migration("20250523195728_InitialCreate")]
+    [Migration("20250524130902_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -607,18 +607,22 @@ namespace AnimalShelter.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AdditionalNotes")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("AddressId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

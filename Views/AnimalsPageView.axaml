@@ -30,7 +30,7 @@
                 <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="*" />
                 <DataGridTextColumn Header="Microchip" Binding="{Binding Microchip}" Width="*" />
                 <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="*" />
-                <DataGridTextColumn Header="IsAdopted" Binding="{Binding IsAdopted}" Width="*" />
+                <DataGridTextColumn Header="Is Adopted?" Binding="{Binding IsAdopted}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
 
