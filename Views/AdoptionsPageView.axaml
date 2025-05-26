@@ -10,92 +10,96 @@
              x:DataType="vm:AdoptionsPageViewModel"
              Foreground="Black">
 
-    <StackPanel Margin="20">
+    <ScrollViewer>
+        <StackPanel Margin="20">
 
-        <!-- Tabela adopcji - tylko do odczytu -->
-        <DataGrid ItemsSource="{Binding Adoptions}"
-                  AutoGenerateColumns="False"
-                  GridLinesVisibility="All"
-                  BorderThickness="1"
-                  BorderBrush="Gray"
-                  IsReadOnly="True"
-                  SelectedItem="{Binding SelectedAdoption}"
-                  Height="300">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Animal Name" Binding="{Binding AnimalName}" Width="*" />
-                <DataGridTextColumn Header="Animal Species" Binding="{Binding AnimalSpecies}" Width="*" />
-                <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="*" />
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
-                <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*" />
-                <DataGridTextColumn Header="Street Address" Binding="{Binding AddressStreetAddress}" Width="*" />
-                <DataGridTextColumn Header="City" Binding="{Binding AddressCity}" Width="*" />
-                <DataGridTextColumn Header="Postal Code" Binding="{Binding AddressPostalCode}" Width="*" />
-                <DataGridTextColumn Header="Country" Binding="{Binding AddressCountry}" Width="*" />
-                <DataGridTextColumn Header="Adoption Date" Binding="{Binding AdoptionDate, StringFormat=d}" Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
+            <!-- Tabela adopcji - tylko do odczytu -->
+            <DataGrid ItemsSource="{Binding Adoptions}"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="All"
+                      BorderThickness="1"
+                      BorderBrush="Gray"
+                      IsReadOnly="True"
+                      SelectedItem="{Binding SelectedAdoption}"
+                      Height="500">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Animal Name" Binding="{Binding AnimalName}" Width="*" />
+                    <DataGridTextColumn Header="Animal Species" Binding="{Binding AnimalSpecies}" Width="*" />
+                    <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="*" />
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+                    <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*" />
+                    <DataGridTextColumn Header="Street Address" Binding="{Binding AddressStreetAddress}" Width="*" />
+                    <DataGridTextColumn Header="City" Binding="{Binding AddressCity}" Width="*" />
+                    <DataGridTextColumn Header="Postal Code" Binding="{Binding AddressPostalCode}" Width="*" />
+                    <DataGridTextColumn Header="Country" Binding="{Binding AddressCountry}" Width="*" />
+                    <DataGridTextColumn Header="Adoption Date" Binding="{Binding AdoptionDate, StringFormat=d}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <!-- Przyciski -->
-        <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Spacing="10">
-            <Button Content="Delete Selected"
-                    IsEnabled="{Binding SelectedAdoption, Converter={StaticResource NullToBoolConverter}}"
-                    Click="OnDeleteAdoption" />
-        </StackPanel>
-
-        <!-- Formularz dodawania adopcji -->
-        <StackPanel Margin="0,20,0,0" Orientation="Vertical" Spacing="10">
-            <TextBlock Text="Add New Adoption" FontWeight="Bold" FontSize="16"/>
-
-            <TextBlock Text="Select Animal:"/>
-            <ComboBox ItemsSource="{Binding AvailableAnimals}" SelectedItem="{Binding SelectedAnimal}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-
-            <TextBlock Text="Address (Select Existing):"/>
-            <ComboBox ItemsSource="{Binding ExistingAddresses}" SelectedItem="{Binding SelectedAddress}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding StreetAddress}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-
-            <CheckBox Foreground="Black" Content="Type New Address" IsChecked="{Binding IsNewAddressVisible}" />
-
-            <StackPanel IsVisible="{Binding IsNewAddressVisible}">
-                <TextBlock Text="Street:"/>
-                <TextBox Text="{Binding NewAddress.StreetAddress}"/>
-
-                <TextBlock Text="City:"/>
-                <TextBox Text="{Binding NewAddress.City}"/>
-
-                <TextBlock Text="Postal Code:"/>
-                <TextBox Text="{Binding NewAddress.PostalCode}"/>
-
-                <TextBlock Text="Country:"/>
-                <TextBox Text="{Binding NewAddress.Country}"/>
+            <!-- Przyciski -->
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Spacing="10">
+                <Button Content="Delete Selected"
+                        IsEnabled="{Binding SelectedAdoption, Converter={StaticResource NullToBoolConverter}}"
+                        Click="OnDeleteAdoption" />
             </StackPanel>
 
-            <TextBlock Text="Full Name:"/>
-            <TextBox Text="{Binding NewAdoption.FullName}"/>
+            <!-- Formularz dodawania adopcji w ScrollViewerze -->
+            <ScrollViewer Height="450" Margin="0,20,0,0">
+                <StackPanel Orientation="Vertical" Spacing="10">
+                    <TextBlock Text="Add New Adoption" FontWeight="Bold" FontSize="16"/>
 
-            <TextBlock Text="Email:"/>
-            <TextBox Text="{Binding NewAdoption.Email}"/>
+                    <TextBlock Text="Select Animal:"/>
+                    <ComboBox ItemsSource="{Binding AvailableAnimals}" SelectedItem="{Binding SelectedAnimal}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-            <TextBlock Text="Phone Number:"/>
-            <TextBox Text="{Binding NewAdoption.PhoneNumber}"/>
+                    <TextBlock Text="Address (Select Existing):"/>
+                    <ComboBox ItemsSource="{Binding ExistingAddresses}" SelectedItem="{Binding SelectedAddress}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding StreetAddress}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-            <TextBlock Text="Notes:"/>
-            <TextBox Text="{Binding NewAdoption.Notes}" AcceptsReturn="True" Height="60"/>
+                    <CheckBox Foreground="Black" Content="Type New Address" IsChecked="{Binding IsNewAddressVisible}" />
 
-            <Button Content="Add Adoption"
-                    Width="150"
-                    HorizontalAlignment="Left"
-                    Click="OnAddAdoption"/>
+                    <StackPanel IsVisible="{Binding IsNewAddressVisible}">
+                        <TextBlock Text="Street:"/>
+                        <TextBox Text="{Binding NewAddress.StreetAddress}"/>
+
+                        <TextBlock Text="City:"/>
+                        <TextBox Text="{Binding NewAddress.City}"/>
+
+                        <TextBlock Text="Postal Code:"/>
+                        <TextBox Text="{Binding NewAddress.PostalCode}"/>
+
+                        <TextBlock Text="Country:"/>
+                        <TextBox Text="{Binding NewAddress.Country}"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Full Name:"/>
+                    <TextBox Text="{Binding NewAdoption.FullName}"/>
+
+                    <TextBlock Text="Email:"/>
+                    <TextBox Text="{Binding NewAdoption.Email}"/>
+
+                    <TextBlock Text="Phone Number:"/>
+                    <TextBox Text="{Binding NewAdoption.PhoneNumber}"/>
+
+                    <TextBlock Text="Notes:"/>
+                    <TextBox Text="{Binding NewAdoption.Notes}" AcceptsReturn="True" Height="60"/>
+
+                    <Button Content="Add Adoption"
+                            Width="150"
+                            HorizontalAlignment="Left"
+                            Click="OnAddAdoption"/>
+                </StackPanel>
+            </ScrollViewer>
         </StackPanel>
-    </StackPanel>
+    </ScrollViewer>
 </UserControl>

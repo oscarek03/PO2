@@ -10,35 +10,37 @@
              x:DataType="vm:VolunteersPageViewModel"
              Foreground="Black">
 
-    <StackPanel>
-        <!-- DataGrid -->
-        <DataGrid Margin="20"
-                  ItemsSource="{Binding Volunteers}"
-                  SelectedItem="{Binding SelectedVolunteer}"
-                  AutoGenerateColumns="False"
-                  GridLinesVisibility="All"
-                  BorderThickness="1"
-                  BorderBrush="Gray"
-                  IsReadOnly="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="*" />
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
-                <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*" />
-                <DataGridTextColumn Header="Additional Notes" Binding="{Binding AdditionalNotes}" Width="*" />
-                <DataGridTextColumn Header="Street Address" Binding="{Binding AddressStreetAddress}" Width="*" />
-                <DataGridTextColumn Header="City" Binding="{Binding AddressCity}" Width="*" />
-                <DataGridTextColumn Header="Postal Code" Binding="{Binding AddressPostalCode}" Width="*" />
-                <DataGridTextColumn Header="Country" Binding="{Binding AddressCountry}" Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
+    <ScrollViewer>
+        <StackPanel>
+            <!-- DataGrid -->
+            <DataGrid Margin="20"
+                      ItemsSource="{Binding Volunteers}"
+                      SelectedItem="{Binding SelectedVolunteer}"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="All"
+                      BorderThickness="1"
+                      BorderBrush="Gray"
+                      IsReadOnly="False"
+                      Height="600">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="*" />
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+                    <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*" />
+                    <DataGridTextColumn Header="Additional Notes" Binding="{Binding AdditionalNotes}" Width="*" />
+                    <DataGridTextColumn Header="Street Address" Binding="{Binding AddressStreetAddress}" Width="*" />
+                    <DataGridTextColumn Header="City" Binding="{Binding AddressCity}" Width="*" />
+                    <DataGridTextColumn Header="Postal Code" Binding="{Binding AddressPostalCode}" Width="*" />
+                    <DataGridTextColumn Header="Country" Binding="{Binding AddressCountry}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <!-- Buttons -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Add" Margin="5" Click="OnAddVolunteer"/>
-            <Button Content="Update" Margin="5" Click="OnUpdateVolunteer"/>
-            <Button Content="Delete" Margin="5" Click="OnDeleteVolunteer"/>
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="Add" Margin="5" Click="OnAddVolunteer"/>
+                <Button Content="Update" Margin="5" Click="OnUpdateVolunteer"/>
+                <Button Content="Delete" Margin="5" Click="OnDeleteVolunteer"/>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
-
+    </ScrollViewer>
 
 </UserControl>

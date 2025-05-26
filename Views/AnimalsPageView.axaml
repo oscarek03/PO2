@@ -10,37 +10,39 @@
              x:DataType="vm:AnimalsPageViewModel"
              Foreground="Black">
 
-    <StackPanel>
-        <!-- DataGrid -->
-        <DataGrid Margin="20"
-                  ItemsSource="{Binding Animals}"
-                  SelectedItem="{Binding SelectedAnimal}"
-                  AutoGenerateColumns="False"
-                  GridLinesVisibility="All"
-                  BorderThickness="1"
-                  BorderBrush="Gray"
-                  IsReadOnly="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
-                <DataGridTextColumn Header="Species" Binding="{Binding Species}" Width="*" />
-                <DataGridTextColumn Header="Breed" Binding="{Binding Breed}" Width="*" />
-                <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="*" />
-                <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="*" />
-                <DataGridTextColumn Header="Color" Binding="{Binding Color}" Width="*" />
-                <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="*" />
-                <DataGridTextColumn Header="Microchip" Binding="{Binding Microchip}" Width="*" />
-                <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="*" />
-                <DataGridTextColumn Header="Is Adopted?" Binding="{Binding IsAdopted}" Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
+    <ScrollViewer>
+        <StackPanel>
+            <!-- DataGrid -->
+            <DataGrid Margin="20" 
+                      Height="600"
+                      ItemsSource="{Binding Animals}"
+                      SelectedItem="{Binding SelectedAnimal}"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="All"
+                      BorderThickness="1"
+                      BorderBrush="Gray"
+                      IsReadOnly="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+                    <DataGridTextColumn Header="Species" Binding="{Binding Species}" Width="*" />
+                    <DataGridTextColumn Header="Breed" Binding="{Binding Breed}" Width="*" />
+                    <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="*" />
+                    <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="*" />
+                    <DataGridTextColumn Header="Color" Binding="{Binding Color}" Width="*" />
+                    <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="*" />
+                    <DataGridTextColumn Header="Microchip" Binding="{Binding Microchip}" Width="*" />
+                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="*" />
+                    <DataGridTextColumn Header="Is Adopted?" Binding="{Binding IsAdopted}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <!-- Buttons -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Add" Margin="5" Click="OnAddAnimal"/>
-            <Button Content="Update" Margin="5" Click="OnUpdateAnimal"/>
-            <Button Content="Delete" Margin="5" Click="OnDeleteAnimal"/>
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="Add" Margin="5" Click="OnAddAnimal"/>
+                <Button Content="Update" Margin="5" Click="OnUpdateAnimal"/>
+                <Button Content="Delete" Margin="5" Click="OnDeleteAnimal"/>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
-
+    </ScrollViewer>
 
 </UserControl>
