@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using AnimalShelter.Models;
 using AnimalShelter.Data;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace AnimalShelter.ViewModels;
@@ -16,18 +15,46 @@ public partial class AnimalsPageViewModel : ViewModelBase
     public Animal? SelectedAnimal
     {
         get => _selectedAnimal;
-        set => SetProperty(ref _selectedAnimal, value);
+        set 
+        { 
+            SetProperty(ref _selectedAnimal, value);
+            if (value != null)
+            {
+                // Kopiuj dane do formularza
+                EditedAnimal = new Animal
+                {
+                    Id = value.Id,
+                    Name = value.Name,
+                    Species = value.Species,
+                    Breed = value.Breed,
+                    Age = value.Age,
+                    Gender = value.Gender,
+                    Color = value.Color,
+                    Size = value.Size,
+                    Microchip = value.Microchip,
+                    Location = value.Location,
+                    IsAdopted = value.IsAdopted
+                };
+            }
+        }
+    }
+
+    private Animal _editedAnimal = new();
+    public Animal EditedAnimal
+    {
+        get => _editedAnimal;
+        set => SetProperty(ref _editedAnimal, value);
     }
 
     public AnimalsPageViewModel(AnimalShelterDbContext dbContext)
     {
         _dbContext = dbContext;
         LoadAnimals();
+        ClearForm();
     }
 
     private void LoadAnimals()
     {
-        _dbContext.Database.EnsureCreated();
         Animals.Clear();
         foreach (var animal in _dbContext.Animals.ToList())
         {
@@ -35,31 +62,59 @@ public partial class AnimalsPageViewModel : ViewModelBase
         }
     }
 
-    public void AddAnimal(Animal newAnimal)
+    public void AddAnimal()
     {
-        _dbContext.Animals.Add(newAnimal);
+        if (string.IsNullOrWhiteSpace(EditedAnimal.Name)) return;
+
+        _dbContext.Animals.Add(EditedAnimal);
         _dbContext.SaveChanges();
-        Animals.Add(newAnimal);
+        LoadAnimals();
+        ClearForm();
     }
 
-    public void UpdateAnimal(Animal updatedAnimal)
+    public void UpdateAnimal()
     {
-        var animal = _dbContext.Animals.Find(updatedAnimal.Id);
+        if (SelectedAnimal == null) return;
+
+        var animal = _dbContext.Animals.Find(SelectedAnimal.Id);
         if (animal != null)
         {
-            _dbContext.Entry(animal).CurrentValues.SetValues(updatedAnimal);
+            animal.Name = EditedAnimal.Name;
+            animal.Species = EditedAnimal.Species;
+            animal.Breed = EditedAnimal.Breed;
+            animal.Age = EditedAnimal.Age;
+            animal.Gender = EditedAnimal.Gender;
+            animal.Color = EditedAnimal.Color;
+            animal.Size = EditedAnimal.Size;
+            animal.Microchip = EditedAnimal.Microchip;
+            animal.Location = EditedAnimal.Location;
+            animal.IsAdopted = EditedAnimal.IsAdopted;
+
             _dbContext.SaveChanges();
             LoadAnimals();
         }
     }
 
-    public void DeleteAnimal(Animal animalToDelete)
+    public void DeleteAnimal()
     {
-        if (animalToDelete != null)
+        if (SelectedAnimal == null)
+            return;
+
+        if (SelectedAnimal.IsAdopted == true)
         {
-            _dbContext.Animals.Remove(animalToDelete);
-            _dbContext.SaveChanges();
-            Animals.Remove(animalToDelete);
+            return;
         }
+
+        _dbContext.Animals.Remove(SelectedAnimal);
+        _dbContext.SaveChanges();
+        LoadAnimals();
+        ClearForm();
+    }
+
+
+    public void ClearForm()
+    {
+        EditedAnimal = new Animal();
+        SelectedAnimal = null;
     }
 }

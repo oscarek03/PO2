@@ -15,125 +15,136 @@ public partial class AdoptionsPageViewModel : ViewModelBase
     public ObservableCollection<Animal> AvailableAnimals { get; set; } = new();
     public ObservableCollection<Address> ExistingAddresses { get; set; } = new();
 
-    public Adoption? NewAdoption { get; set; } = new();
-    public Animal? SelectedAnimal { get; set; }
-    public Address? SelectedAddress { get; set; }
-    public Address NewAddress { get; set; } = new();
-
     private Adoption? _selectedAdoption;
     public Adoption? SelectedAdoption
     {
         get => _selectedAdoption;
-        set => SetProperty(ref _selectedAdoption, value);
+        set 
+        { 
+            SetProperty(ref _selectedAdoption, value);
+            if (value != null)
+            {
+                EditedAdoption = new Adoption
+                {
+                    Id = value.Id,
+                    FullName = value.FullName,
+                    Email = value.Email,
+                    PhoneNumber = value.PhoneNumber,
+                    AnimalId = value.AnimalId,
+                    AddressId = value.AddressId
+                };
+                
+                // Znajdź zwierzę (także wśród adoptowanych)
+                SelectedAnimal = AvailableAnimals.FirstOrDefault(a => a.Id == value.AnimalId) 
+                               ?? _dbContext.Animals.Find(value.AnimalId);
+                
+                SelectedAddress = ExistingAddresses.FirstOrDefault(a => a.Id == value.AddressId);
+            }
+        }
     }
 
-    private bool _isNewAddressVisible;
-    public bool IsNewAddressVisible
+    private Adoption _editedAdoption = new();
+    public Adoption EditedAdoption
     {
-        get => _isNewAddressVisible;
-        set => SetProperty(ref _isNewAddressVisible, value);
+        get => _editedAdoption;
+        set => SetProperty(ref _editedAdoption, value);
+    }
+
+    private Animal? _selectedAnimal;
+    public Animal? SelectedAnimal
+    {
+        get => _selectedAnimal;
+        set => SetProperty(ref _selectedAnimal, value);
+    }
+
+    private Address? _selectedAddress;
+    public Address? SelectedAddress
+    {
+        get => _selectedAddress;
+        set => SetProperty(ref _selectedAddress, value);
     }
 
     public AdoptionsPageViewModel(AnimalShelterDbContext dbContext)
     {
         _dbContext = dbContext;
-        LoadAdoptions();
-        LoadAvailableAnimals();
-        LoadExistingAddresses();
+        LoadData();
     }
 
-    private void LoadAdoptions()
+    private void LoadData()
     {
-        _dbContext.Database.EnsureCreated();
         Adoptions.Clear();
-        var list = _dbContext.Adoptions
-            .Include(a => a.Animal)
-            .Include(a => a.Address)
-            .ToList();
-
-        foreach (var adoption in list)
-        {
-            Adoptions.Add(adoption);
-        }
-    }
-
-    private void LoadAvailableAnimals()
-    {
         AvailableAnimals.Clear();
-        var animals = _dbContext.Animals
-            .Where(a => a.IsAdopted == false || a.IsAdopted == null)
-            .ToList();
-
-        foreach (var a in animals)
-        {
-            AvailableAnimals.Add(a);
-        }
-    }
-
-    private void LoadExistingAddresses()
-    {
         ExistingAddresses.Clear();
-        var addresses = _dbContext.Addresses.ToList();
-        foreach (var addr in addresses)
-        {
-            ExistingAddresses.Add(addr);
-        }
+
+        foreach (var adoption in _dbContext.Adoptions.Include(a => a.Animal).Include(a => a.Address).ToList())
+            Adoptions.Add(adoption);
+
+        foreach (var animal in _dbContext.Animals.Where(a => a.IsAdopted != true).ToList())
+            AvailableAnimals.Add(animal);
+
+        foreach (var address in _dbContext.Addresses.ToList())
+            ExistingAddresses.Add(address);
     }
 
     public void AddAdoption()
     {
-        if (SelectedAnimal == null || NewAdoption == null)
-            return;
+        if (SelectedAnimal == null || string.IsNullOrWhiteSpace(EditedAdoption.FullName)) return;
 
-        NewAdoption.AnimalId = SelectedAnimal.Id;
-        NewAdoption.AdoptionDate = DateTime.UtcNow;
-
-        if (IsNewAddressVisible)
+        var newAdoption = new Adoption
         {
-            _dbContext.Addresses.Add(NewAddress);
-            _dbContext.SaveChanges();
-            NewAdoption.AddressId = NewAddress.Id;
-        }
-        else if (SelectedAddress != null)
-        {
-            NewAdoption.AddressId = SelectedAddress.Id;
-        }
-        else
-        {
-            return; // brak adresu
-        }
+            FullName = EditedAdoption.FullName,
+            Email = EditedAdoption.Email,
+            PhoneNumber = EditedAdoption.PhoneNumber,
+            AnimalId = SelectedAnimal.Id,
+            AddressId = SelectedAddress?.Id ?? 1,
+            AdoptionDate = DateTime.Now
+        };
 
-        _dbContext.Adoptions.Add(NewAdoption);
+        _dbContext.Adoptions.Add(newAdoption);
 
-        SelectedAnimal.IsAdopted = true;
-        _dbContext.Animals.Update(SelectedAnimal);
+        var animal = _dbContext.Animals.Find(SelectedAnimal.Id);
+        if (animal != null)
+        {
+            animal.IsAdopted = true;
+            _dbContext.Animals.Update(animal);
+        }
 
         _dbContext.SaveChanges();
+        LoadData();
+        ClearForm();
+    }
 
-        // Odświeżenie danych
-        LoadAdoptions();
-        LoadAvailableAnimals();
-        LoadExistingAddresses();
 
-        // Reset formularza
-        NewAdoption = new Adoption();
-        NewAddress = new Address();
-        SelectedAddress = null;
-        SelectedAnimal = null;
-        IsNewAddressVisible = false;
+    public void UpdateAdoption()
+    {
+        if (SelectedAdoption == null) return;
+
+        var adoption = _dbContext.Adoptions.Find(SelectedAdoption.Id);
+        if (adoption != null)
+        {
+            adoption.FullName = EditedAdoption.FullName;
+            adoption.Email = EditedAdoption.Email;
+            adoption.PhoneNumber = EditedAdoption.PhoneNumber;
+
+            if (SelectedAnimal != null)
+                adoption.AnimalId = SelectedAnimal.Id;
+
+            if (SelectedAddress != null)
+                adoption.AddressId = SelectedAddress.Id;
+
+            _dbContext.SaveChanges();
+            LoadData();
+        }
     }
 
     public void DeleteAdoption()
     {
-        if (SelectedAdoption == null)
-            return;
+        if (SelectedAdoption == null) return;
 
-        var adoption = _dbContext.Adoptions
-            .FirstOrDefault(a => a.Id == SelectedAdoption.Id);
-
+        var adoption = _dbContext.Adoptions.Find(SelectedAdoption.Id);
         if (adoption != null)
         {
-            var animal = _dbContext.Animals.FirstOrDefault(a => a.Id == adoption.AnimalId);
+            var animal = _dbContext.Animals.Find(adoption.AnimalId);
             if (animal != null)
             {
                 animal.IsAdopted = false;
@@ -142,10 +153,15 @@ public partial class AdoptionsPageViewModel : ViewModelBase
 
             _dbContext.Adoptions.Remove(adoption);
             _dbContext.SaveChanges();
+            LoadData();
+            ClearForm();
         }
-
-        LoadAdoptions();
-        LoadAvailableAnimals();
+    }
+    public void ClearForm()
+    {
+        EditedAdoption = new Adoption();
+        SelectedAnimal = null;
+        SelectedAddress = null;
         SelectedAdoption = null;
     }
 }

@@ -13,13 +13,8 @@ public partial class AdoptionsPageView : UserControl
 
     private AdoptionsPageViewModel? ViewModel => DataContext as AdoptionsPageViewModel;
 
-    private void OnDeleteAdoption(object? sender, RoutedEventArgs e)
-    {
-        ViewModel?.DeleteAdoption();
-    }
-
-    private void OnAddAdoption(object? sender, RoutedEventArgs e)
-    {
-        ViewModel?.AddAdoption();
-    }
+    private void OnAdd(object? sender, RoutedEventArgs e) => ViewModel?.AddAdoption();
+    private void OnUpdate(object? sender, RoutedEventArgs e) => ViewModel?.UpdateAdoption();
+    private void OnDelete(object? sender, RoutedEventArgs e) => ViewModel?.DeleteAdoption();
+    private void OnClear(object? sender, RoutedEventArgs e) => ViewModel?.ClearForm();
 }

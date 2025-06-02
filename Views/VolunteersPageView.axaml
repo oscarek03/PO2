@@ -1,27 +1,22 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AnimalShelter.ViewModels"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
              x:Class="AnimalShelter.Views.VolunteersPageView"
              x:DataType="vm:VolunteersPageViewModel"
              Foreground="Black">
 
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Margin="20">
             <!-- DataGrid -->
-            <DataGrid Margin="20"
-                      ItemsSource="{Binding Volunteers}"
+            <DataGrid ItemsSource="{Binding Volunteers}"
                       SelectedItem="{Binding SelectedVolunteer}"
                       AutoGenerateColumns="False"
                       GridLinesVisibility="All"
                       BorderThickness="1"
                       BorderBrush="Gray"
-                      IsReadOnly="False"
-                      Height="600">
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      Height="300">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="*" />
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
@@ -34,13 +29,37 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!-- Buttons -->
+            <!-- Formularz pod DataGrid -->
+            <StackPanel Margin="0,20,0,0">
+                <TextBlock Text="Full Name:"/>
+                <TextBox Text="{Binding EditedVolunteer.FullName}"/>
+
+                <TextBlock Text="Email:"/>
+                <TextBox Text="{Binding EditedVolunteer.Email}"/>
+
+                <TextBlock Text="Phone Number:"/>
+                <TextBox Text="{Binding EditedVolunteer.PhoneNumber}"/>
+
+                <TextBlock Text="Additional Notes:"/>
+                <TextBox Text="{Binding EditedVolunteer.AdditionalNotes}" AcceptsReturn="True" Height="60"/>
+
+                <TextBlock Text="Address:"/>
+                <ComboBox ItemsSource="{Binding Addresses}" SelectedItem="{Binding SelectedAddress}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding StreetAddress}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <!-- Przyciski -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Add" Margin="5" Click="OnAddVolunteer"/>
-                <Button Content="Update" Margin="5" Click="OnUpdateVolunteer"/>
-                <Button Content="Delete" Margin="5" Click="OnDeleteVolunteer"/>
+                <Button Content="Add" Click="OnAddVolunteer" Margin="5"/>
+                <Button Content="Update" Click="OnUpdateVolunteer" Margin="5"/>
+                <Button Content="Delete" Click="OnDeleteVolunteer" Margin="5"/>
+                <Button Content="Clear" Click="OnClearForm" Margin="5"/>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>
-
 </UserControl>

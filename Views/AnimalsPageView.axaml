@@ -12,16 +12,17 @@
 
     <ScrollViewer>
         <StackPanel>
-            <!-- DataGrid -->
+            <!-- DataGrid - tylko do odczytu -->
             <DataGrid Margin="20" 
-                      Height="600"
+                      Height="400"
                       ItemsSource="{Binding Animals}"
                       SelectedItem="{Binding SelectedAnimal}"
                       AutoGenerateColumns="False"
                       GridLinesVisibility="All"
                       BorderThickness="1"
                       BorderBrush="Gray"
-                      IsReadOnly="False">
+                      IsReadOnly="True"
+                      SelectionMode="Single">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
                     <DataGridTextColumn Header="Species" Binding="{Binding Species}" Width="*" />
@@ -32,15 +33,66 @@
                     <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="*" />
                     <DataGridTextColumn Header="Microchip" Binding="{Binding Microchip}" Width="*" />
                     <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="*" />
-                    <DataGridTextColumn Header="Is Adopted?" Binding="{Binding IsAdopted}" Width="*" />
+                    <DataGridCheckBoxColumn Header="Is Adopted?" Binding="{Binding IsAdopted}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!-- Buttons -->
+            <!-- Formularz edycji -->
+            <Border BorderBrush="Gray" BorderThickness="1" Margin="20" Padding="20" CornerRadius="5">
+                <StackPanel>
+                    <TextBlock Text="Animal Details" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Lewa kolumna -->
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Name:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedAnimal.Name}" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Species:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedAnimal.Species}" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Breed:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedAnimal.Breed}" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Age:" Margin="0,5"/>
+                            <NumericUpDown Value="{Binding EditedAnimal.Age}" Minimum="0" Maximum="50" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Gender:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedAnimal.Gender}" Margin="0,0,0,10"/>
+                        </StackPanel>
+
+                        <!-- Prawa kolumna -->
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <TextBlock Text="Color:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedAnimal.Color}" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Size:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedAnimal.Size}" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Microchip:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedAnimal.Microchip}" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Location:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedAnimal.Location}" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Is Adopted:" Margin="0,5"/>
+                            <CheckBox IsChecked="{Binding EditedAnimal.IsAdopted}" Margin="0,0,0,10"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Przyciski -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Add" Margin="5" Click="OnAddAnimal"/>
-                <Button Content="Update" Margin="5" Click="OnUpdateAnimal"/>
-                <Button Content="Delete" Margin="5" Click="OnDeleteAnimal"/>
+                <Button Content="Add" Click="OnAdd" Margin="5"/>
+                <Button Content="Update" Click="OnUpdate" Margin="5"/>
+                <Button Content="Delete" Click="OnDelete" Margin="5"/>
+                <Button Content="Clear" Click="OnClear" Margin="5"/>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>
