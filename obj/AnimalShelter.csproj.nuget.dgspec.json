@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\oszcz\\Desktop\\AnimalShelter\\AnimalShelter.csproj": {}
+    "C:\\Users\\oszcz\\Desktop\\c--animal-shelter\\AnimalShelter.csproj": {}
   },
   "projects": {
-    "C:\\Users\\oszcz\\Desktop\\AnimalShelter\\AnimalShelter.csproj": {
+    "C:\\Users\\oszcz\\Desktop\\c--animal-shelter\\AnimalShelter.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\oszcz\\Desktop\\AnimalShelter\\AnimalShelter.csproj",
+        "projectUniqueName": "C:\\Users\\oszcz\\Desktop\\c--animal-shelter\\AnimalShelter.csproj",
         "projectName": "AnimalShelter",
-        "projectPath": "C:\\Users\\oszcz\\Desktop\\AnimalShelter\\AnimalShelter.csproj",
+        "projectPath": "C:\\Users\\oszcz\\Desktop\\c--animal-shelter\\AnimalShelter.csproj",
         "packagesPath": "C:\\Users\\oszcz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\oszcz\\Desktop\\AnimalShelter\\obj\\",
+        "outputPath": "C:\\Users\\oszcz\\Desktop\\c--animal-shelter\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

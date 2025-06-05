@@ -94,11 +94,16 @@ public partial class AdoptionsPageViewModel : ViewModelBase
             ExistingAddresses.Add(address);
     }
 
-    // dodaje nowa adopcje do bazy (dane bierze z formularza ofc), oznacza flage adopcji na true i aktualizuje liste
+// dodaje nowa adopcje do bazy (dane bierze z formularza ofc), oznacza flage adopcji na true i aktualizuje liste
     public void AddAdoption()
     {
-        if (SelectedAnimal == null || SelectedAddress == null || string.IsNullOrWhiteSpace(EditedAdoption.FullName)) return;
+        if (SelectedAnimal == null || SelectedAddress == null || string.IsNullOrWhiteSpace(EditedAdoption.FullName))
+            return;
 
+        // sprawdzenie czy dany pies juz nie jest adoptowany
+        var animal = _dbContext.Animals.Find(SelectedAnimal.Id);
+        if (animal == null || animal.IsAdopted == true)
+            return;
 
         var newAdoption = new Adoption
         {
@@ -112,17 +117,14 @@ public partial class AdoptionsPageViewModel : ViewModelBase
 
         _dbContext.Adoptions.Add(newAdoption);
 
-        var animal = _dbContext.Animals.Find(SelectedAnimal.Id);
-        if (animal != null)
-        {
-            animal.IsAdopted = true;
-            _dbContext.Animals.Update(animal);
-        }
+        animal.IsAdopted = true;
+        _dbContext.Animals.Update(animal);
 
         _dbContext.SaveChanges();
         LoadData();
         ClearForm();
     }
+
 
     // aktualizuje wybrana adopcje na podstawie nowych danych z formularza
     public void UpdateAdoption()
