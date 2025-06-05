@@ -11,6 +11,7 @@ public partial class AnimalsPageView : UserControl
         InitializeComponent();
     }
 
+    //pobieram aktualny datac context, zeby go zrzutowac na ViewModel (mam latwy dostep do metod ktore sa we viewmodel)
     private AnimalsPageViewModel? ViewModel => DataContext as AnimalsPageViewModel;
 
     private void OnAdd(object? sender, RoutedEventArgs e) => ViewModel?.AddAnimal();

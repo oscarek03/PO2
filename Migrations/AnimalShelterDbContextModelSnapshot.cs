@@ -4,7 +4,6 @@ using AnimalShelter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -16,35 +15,33 @@ namespace AnimalShelter.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.4");
 
             modelBuilder.Entity("AnimalShelter.Models.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("StreetAddress")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -113,30 +110,32 @@ namespace AnimalShelter.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AddressId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("AdoptionDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("AnimalId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
-                        .HasColumnType("text");
+                        .HasMaxLength(150)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -186,39 +185,45 @@ namespace AnimalShelter.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("Age")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Breed")
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Color")
-                        .HasColumnType("text");
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Gender")
-                        .HasColumnType("text");
+                        .HasMaxLength(10)
+                        .HasColumnType("TEXT");
 
                     b.Property<bool?>("IsAdopted")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Location")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Microchip")
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Size")
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Species")
-                        .HasColumnType("text");
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -434,164 +439,356 @@ namespace AnimalShelter.Migrations
                             Name = "Czarek",
                             Size = "Mały",
                             Species = "Kot"
-                        });
-                });
-
-            modelBuilder.Entity("AnimalShelter.Models.Donation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal?>("Amount")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime?>("DonationDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("DonationType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DonorName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NotesOrDedication")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PaymentMethod")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Donations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 100m,
-                            DonationDate = new DateTime(2024, 4, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DonationType = "Pieniądze",
-                            DonorName = "Anna Nowak",
-                            Email = "anna.nowak@example.com",
-                            NotesOrDedication = "Dla zwierząt",
-                            PaymentMethod = "Przelew",
-                            PhoneNumber = "987654321"
                         },
                         new
                         {
-                            Id = 2,
-                            Amount = 50m,
-                            DonationDate = new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DonationType = "Karma",
-                            DonorName = "Jan Kowalski",
-                            Email = "jan.kowalski@example.com",
-                            NotesOrDedication = "Karma dla psów",
-                            PaymentMethod = "Osobiście",
-                            PhoneNumber = "123456789"
+                            Id = 16,
+                            Age = 7,
+                            Breed = "Labrador",
+                            Color = "Czekoladowy",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 16",
+                            Microchip = "1617181920",
+                            Name = "Borys",
+                            Size = "Duży",
+                            Species = "Pies"
                         },
                         new
                         {
-                            Id = 3,
-                            Amount = 200m,
-                            DonationDate = new DateTime(2024, 5, 2, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DonationType = "Pieniądze",
-                            DonorName = "Piotr Zieliński",
-                            Email = "piotr.zielinski@example.com",
-                            NotesOrDedication = "Na leczenie kotów",
-                            PaymentMethod = "Karta",
-                            PhoneNumber = "555666777"
+                            Id = 17,
+                            Age = 2,
+                            Breed = "Shih Tzu",
+                            Color = "Biały",
+                            Gender = "Samica",
+                            IsAdopted = true,
+                            Location = "Boks 17",
+                            Microchip = "1718192021",
+                            Name = "Misia",
+                            Size = "Mały",
+                            Species = "Pies"
                         },
                         new
                         {
-                            Id = 4,
-                            Amount = 75m,
-                            DonationDate = new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DonationType = "Akcesoria",
-                            DonorName = "Maria Wiśniewska",
-                            Email = "maria.wisniewska@example.com",
-                            NotesOrDedication = "Zabawki dla zwierząt",
-                            PaymentMethod = "Osobiście",
-                            PhoneNumber = "888999000"
+                            Id = 18,
+                            Age = 4,
+                            Breed = "Border Collie",
+                            Color = "Czarny",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 18",
+                            Microchip = "1819202122",
+                            Name = "Riko",
+                            Size = "Średni",
+                            Species = "Pies"
                         },
                         new
                         {
-                            Id = 5,
-                            Amount = 120m,
-                            DonationDate = new DateTime(2024, 5, 18, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DonationType = "Pieniądze",
-                            DonorName = "Tomasz Lewandowski",
-                            Email = "tomasz.lewandowski@example.com",
-                            NotesOrDedication = "Dla schroniska",
-                            PaymentMethod = "Przelew",
-                            PhoneNumber = "111222333"
+                            Id = 19,
+                            Age = 3,
+                            Breed = "Brytyjski",
+                            Color = "Szary",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 19",
+                            Microchip = "1920212223",
+                            Name = "Bella",
+                            Size = "Mały",
+                            Species = "Kot"
                         },
                         new
                         {
-                            Id = 6,
-                            Amount = 60m,
-                            DonationDate = new DateTime(2024, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DonationType = "Karma",
-                            DonorName = "Karolina Maj",
-                            Email = "karolina.maj@example.com",
-                            NotesOrDedication = "Karma dla kotów",
-                            PaymentMethod = "Osobiście",
-                            PhoneNumber = "444555666"
+                            Id = 20,
+                            Age = 6,
+                            Breed = "Golden Retriever",
+                            Color = "Złoty",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 20",
+                            Microchip = "2021222324",
+                            Name = "Maks",
+                            Size = "Duży",
+                            Species = "Pies"
                         },
                         new
                         {
-                            Id = 7,
-                            Amount = 150m,
-                            DonationDate = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DonationType = "Pieniądze",
-                            DonorName = "Grzegorz Nowak",
-                            Email = "grzegorz.nowak@example.com",
-                            NotesOrDedication = "Wsparcie ogólne",
-                            PaymentMethod = "Karta",
-                            PhoneNumber = "777888999"
-                        });
-                });
-
-            modelBuilder.Entity("AnimalShelter.Models.Schedule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("EventDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("EventType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Schedules");
-
-                    b.HasData(
+                            Id = 21,
+                            Age = 2,
+                            Breed = "Perski",
+                            Color = "Biały",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 21",
+                            Microchip = "2122232425",
+                            Name = "Daisy",
+                            Size = "Mały",
+                            Species = "Kot"
+                        },
                         new
                         {
-                            Id = 1,
-                            EventDate = new DateTime(2024, 6, 1, 10, 0, 0, 0, DateTimeKind.Utc),
-                            EventType = "Wydarzenie",
-                            Note = "Zapraszamy wszystkich!",
-                            Title = "Dzień otwarty"
+                            Id = 22,
+                            Age = 1,
+                            Breed = "Jack Russell",
+                            Color = "Biały",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 22",
+                            Microchip = "2223242526",
+                            Name = "Tobi",
+                            Size = "Mały",
+                            Species = "Pies"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Age = 5,
+                            Breed = "Mieszaniec",
+                            Color = "Czarny",
+                            Gender = "Samica",
+                            IsAdopted = true,
+                            Location = "Boks 23",
+                            Microchip = "2324252627",
+                            Name = "Mela",
+                            Size = "Mały",
+                            Species = "Kot"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Age = 3,
+                            Breed = "Mieszaniec",
+                            Color = "Rudy",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 24",
+                            Microchip = "2425262728",
+                            Name = "Simba",
+                            Size = "Średni",
+                            Species = "Pies"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Age = 4,
+                            Breed = "Syjamski",
+                            Color = "Biały",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 25",
+                            Microchip = "2526272829",
+                            Name = "Lili",
+                            Size = "Mały",
+                            Species = "Kot"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Age = 2,
+                            Breed = "Dalmatyńczyk",
+                            Color = "Czarny-biały",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 26",
+                            Microchip = "2627282930",
+                            Name = "Oskar",
+                            Size = "Duży",
+                            Species = "Pies"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Age = 3,
+                            Breed = "Mieszaniec",
+                            Color = "Biały-pręgowany",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 27",
+                            Microchip = "2728293031",
+                            Name = "Maja",
+                            Size = "Mały",
+                            Species = "Kot"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Age = 5,
+                            Breed = "Jamnik",
+                            Color = "Brązowy",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 28",
+                            Microchip = "2829303132",
+                            Name = "Bambi",
+                            Size = "Mały",
+                            Species = "Pies"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Age = 6,
+                            Breed = "Mieszaniec",
+                            Color = "Czarny",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 29",
+                            Microchip = "2930313233",
+                            Name = "Kuba",
+                            Size = "Mały",
+                            Species = "Kot"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Age = 4,
+                            Breed = "Sznaucer",
+                            Color = "Srebrny",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 30",
+                            Microchip = "3031323334",
+                            Name = "Pola",
+                            Size = "Średni",
+                            Species = "Pies"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Age = 2,
+                            Breed = "Mieszaniec",
+                            Color = "Szary",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 31",
+                            Microchip = "3132333435",
+                            Name = "Rysio",
+                            Size = "Mały",
+                            Species = "Kot"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Age = 1,
+                            Breed = "Mieszaniec",
+                            Color = "Biały",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 32",
+                            Microchip = "3233343536",
+                            Name = "Kira",
+                            Size = "Mały",
+                            Species = "Pies"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Age = 3,
+                            Breed = "Mieszaniec",
+                            Color = "Pręgowany",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 33",
+                            Microchip = "3334353637",
+                            Name = "Miki",
+                            Size = "Mały",
+                            Species = "Kot"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Age = 2,
+                            Breed = "Mieszaniec",
+                            Color = "Czarny",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 34",
+                            Microchip = "3435363738",
+                            Name = "Fiona",
+                            Size = "Średni",
+                            Species = "Pies"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Age = 4,
+                            Breed = "Mieszaniec",
+                            Color = "Szylkret",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 35",
+                            Microchip = "3536373839",
+                            Name = "Sonia",
+                            Size = "Mały",
+                            Species = "Kot"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Age = 5,
+                            Breed = "Owczarek podhalański",
+                            Color = "Biały",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 36",
+                            Microchip = "3637383940",
+                            Name = "Borys",
+                            Size = "Duży",
+                            Species = "Pies"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Age = 2,
+                            Breed = "Mieszaniec",
+                            Color = "Czarny",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 37",
+                            Microchip = "3738394041",
+                            Name = "Marta",
+                            Size = "Mały",
+                            Species = "Kot"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Age = 3,
+                            Breed = "Mieszaniec",
+                            Color = "Brązowy",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 38",
+                            Microchip = "3839404142",
+                            Name = "Tytus",
+                            Size = "Średni",
+                            Species = "Pies"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Age = 1,
+                            Breed = "Mieszaniec",
+                            Color = "Biały",
+                            Gender = "Samica",
+                            IsAdopted = false,
+                            Location = "Boks 39",
+                            Microchip = "3940414243",
+                            Name = "Lola",
+                            Size = "Mały",
+                            Species = "Kot"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Age = 2,
+                            Breed = "Mieszaniec",
+                            Color = "Czarny",
+                            Gender = "Samiec",
+                            IsAdopted = false,
+                            Location = "Boks 40",
+                            Microchip = "4041424344",
+                            Name = "Bingo",
+                            Size = "Duży",
+                            Species = "Pies"
                         });
                 });
 
@@ -599,28 +796,29 @@ namespace AnimalShelter.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("AdditionalNotes")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("AddressId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(150)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

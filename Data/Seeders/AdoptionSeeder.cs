@@ -12,7 +12,7 @@ namespace AnimalShelter.Data.Seeders
                 new Adoption
                 {
                     Id = 1,
-                    AnimalId = 1, // Pies Labrador
+                    AnimalId = 1, 
                     FullName = "Jan Kowalski",
                     Email = "jan.kowalski@example.com",
                     PhoneNumber = "123456789",
@@ -23,7 +23,7 @@ namespace AnimalShelter.Data.Seeders
                 new Adoption
                 {
                     Id = 2,
-                    AnimalId = 9, // Kot Syjamski
+                    AnimalId = 9, 
                     FullName = "Anna Nowak",
                     Email = "anna.nowak@example.com",
                     PhoneNumber = "987654321",
@@ -34,7 +34,7 @@ namespace AnimalShelter.Data.Seeders
                 new Adoption
                 {
                     Id = 3,
-                    AnimalId = 4, // Pies Beagle
+                    AnimalId = 4,
                     FullName = "Piotr Zieliński",
                     Email = "piotr.zielinski@example.com",
                     PhoneNumber = "555666777",

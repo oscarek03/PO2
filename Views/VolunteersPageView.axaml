@@ -1,22 +1,28 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AnimalShelter.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="AnimalShelter.Views.VolunteersPageView"
              x:DataType="vm:VolunteersPageViewModel"
              Foreground="Black">
 
     <ScrollViewer>
-        <StackPanel Margin="20">
-            <!-- DataGrid -->
-            <DataGrid ItemsSource="{Binding Volunteers}"
+        <StackPanel>
+            <!-- DataGrid - tylko do odczytu -->
+            <DataGrid Margin="20" 
+                      Height="400"
+                      ItemsSource="{Binding Volunteers}"
                       SelectedItem="{Binding SelectedVolunteer}"
                       AutoGenerateColumns="False"
                       GridLinesVisibility="All"
                       BorderThickness="1"
                       BorderBrush="Gray"
                       IsReadOnly="True"
-                      SelectionMode="Single"
-                      Height="300">
+                      SelectionMode="Single">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" Width="*" />
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
@@ -29,29 +35,52 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!-- Formularz pod DataGrid -->
-            <StackPanel Margin="0,20,0,0">
-                <TextBlock Text="Full Name:"/>
-                <TextBox Text="{Binding EditedVolunteer.FullName}"/>
+            <!-- Formularz edycji -->
+            <Border BorderBrush="Gray" BorderThickness="1" Margin="20" Padding="20" CornerRadius="5">
+                <StackPanel>
+                    <TextBlock Text="Volunteer Details" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Email:"/>
-                <TextBox Text="{Binding EditedVolunteer.Email}"/>
+                        <!-- Lewa kolumna -->
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Full Name:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedVolunteer.FullName}" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Email:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedVolunteer.Email}" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Phone Number:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedVolunteer.PhoneNumber}" Margin="0,0,0,10"/>
+                            
+                            <TextBlock Text="Additional Notes:" Margin="0,5"/>
+                            <TextBox Text="{Binding EditedVolunteer.AdditionalNotes}" 
+                                     AcceptsReturn="True" 
+                                     Height="60" 
+                                     Margin="0,0,0,10"/>
+                        </StackPanel>
 
-                <TextBlock Text="Phone Number:"/>
-                <TextBox Text="{Binding EditedVolunteer.PhoneNumber}"/>
-
-                <TextBlock Text="Additional Notes:"/>
-                <TextBox Text="{Binding EditedVolunteer.AdditionalNotes}" AcceptsReturn="True" Height="60"/>
-
-                <TextBlock Text="Address:"/>
-                <ComboBox ItemsSource="{Binding Addresses}" SelectedItem="{Binding SelectedAddress}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding StreetAddress}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
+                        <!-- Prawa kolumna -->
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <TextBlock Text="Address:" Margin="0,5"/>
+                            <ComboBox ItemsSource="{Binding Addresses}" 
+                                      SelectedItem="{Binding SelectedAddress}"
+                                      Margin="0,0,0,10"
+                                      HorizontalAlignment="Stretch">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding StreetAddress}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
 
             <!-- Przyciski -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
@@ -62,4 +91,5 @@
             </StackPanel>
         </StackPanel>
     </ScrollViewer>
+
 </UserControl>

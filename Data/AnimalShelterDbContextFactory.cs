@@ -16,7 +16,7 @@ namespace AnimalShelter.Data
                 .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<AnimalShelterDbContext>();
-            optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
 
             return new AnimalShelterDbContext(optionsBuilder.Options);
         }

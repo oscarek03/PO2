@@ -25,15 +25,13 @@ sealed class Program
 
         // Baza danych
         services.AddDbContext<AnimalShelterDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
 
         // ViewModele
         services.AddSingleton<MainViewModel>();
         services.AddTransient<AnimalsPageViewModel>();
         services.AddTransient<AdoptionsPageViewModel>();
-        services.AddTransient<SchedulePageViewModel>();
-        services.AddTransient<StatisticsPageViewModel>();
-        services.AddTransient<SettingsPageViewModel>();
+        services.AddTransient<AddressesPageViewModel>();
         services.AddTransient<VolunteersPageViewModel>();
 
         // Budowanie kontenera

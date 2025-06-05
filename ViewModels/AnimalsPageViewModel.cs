@@ -53,6 +53,8 @@ public partial class AnimalsPageViewModel : ViewModelBase
         ClearForm();
     }
 
+    // laduje wszystkie aktualne zwierzeta (z bazy) do kolekcji
+
     private void LoadAnimals()
     {
         Animals.Clear();
@@ -62,9 +64,20 @@ public partial class AnimalsPageViewModel : ViewModelBase
         }
     }
 
+    // dodaje nowe zwierze do bazy (z formularza, po czym aktualizuje liste)
     public void AddAnimal()
     {
-        if (string.IsNullOrWhiteSpace(EditedAnimal.Name)) return;
+        if (string.IsNullOrWhiteSpace(EditedAnimal.Name) ||
+            string.IsNullOrWhiteSpace(EditedAnimal.Species) ||
+            string.IsNullOrWhiteSpace(EditedAnimal.Breed) ||
+            EditedAnimal.Age == null ||
+            string.IsNullOrWhiteSpace(EditedAnimal.Gender) ||
+            string.IsNullOrWhiteSpace(EditedAnimal.Color) ||
+            string.IsNullOrWhiteSpace(EditedAnimal.Size) ||
+            string.IsNullOrWhiteSpace(EditedAnimal.Microchip) ||
+            string.IsNullOrWhiteSpace(EditedAnimal.Location)) 
+            return;
+
 
         _dbContext.Animals.Add(EditedAnimal);
         _dbContext.SaveChanges();
@@ -72,6 +85,7 @@ public partial class AnimalsPageViewModel : ViewModelBase
         ClearForm();
     }
 
+    // aktualizuje wybrane zwierze  (z formularza, po czym aktualizuje liste)
     public void UpdateAnimal()
     {
         if (SelectedAnimal == null) return;
@@ -95,6 +109,7 @@ public partial class AnimalsPageViewModel : ViewModelBase
         }
     }
 
+    // usuwa wybrane zwierze (z formularza, po czym aktualizuje liste)
     public void DeleteAnimal()
     {
         if (SelectedAnimal == null)
@@ -112,6 +127,7 @@ public partial class AnimalsPageViewModel : ViewModelBase
     }
 
 
+    // czysci formularz z danych zeby nie robic tego recznie
     public void ClearForm()
     {
         EditedAnimal = new Animal();
