@@ -40,6 +40,8 @@ sealed class Program
         // Start Avalonia z DI
         BuildAvaloniaApp(serviceProvider)
             .StartWithClassicDesktopLifetime(args);
+        
+        
     }
 
     public static AppBuilder BuildAvaloniaApp(IServiceProvider serviceProvider)

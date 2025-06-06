@@ -23,6 +23,7 @@ public partial class VolunteersPageViewModel : ViewModelBase
             SetProperty(ref _selectedVolunteer, value);
             if (value != null)
             {
+                // kopiowanie danych do formularza
                 EditedVolunteer = new Volunteer
                 {
                     Id = value.Id,
@@ -93,7 +94,6 @@ public partial class VolunteersPageViewModel : ViewModelBase
     if (!string.IsNullOrWhiteSpace(EditedVolunteer.Email) &&
         !Regex.IsMatch(EditedVolunteer.Email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
     {
-        // email niepoprawny
         return;
     }
 
@@ -101,7 +101,6 @@ public partial class VolunteersPageViewModel : ViewModelBase
     if (!string.IsNullOrWhiteSpace(EditedVolunteer.PhoneNumber) &&
         !Regex.IsMatch(EditedVolunteer.PhoneNumber, @"^\d{9}$"))
     {
-        // numer niepoprawny
         return;
     }
 
@@ -151,6 +150,8 @@ public void UpdateVolunteer()
         volunteer.AddressId = SelectedAddress.Id;
 
         _dbContext.SaveChanges();
+        // aktualizuje mi datagrid w momencie aktualizacji wolontariusza (inaczej by go zaktualizowalo, i musialbym zmienic zakladke)
+        _dbContext.Entry(volunteer).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
         LoadVolunteers();
         ClearForm();
     }
@@ -171,7 +172,7 @@ public void UpdateVolunteer()
             ClearForm();
         }
     }
-
+    
     // czysci formularz z danych zeby nie robic tego recznie
     public void ClearForm()
     {

@@ -21,7 +21,7 @@ public partial class AddressesPageViewModel : ViewModelBase
             SetProperty(ref _selectedAddress, value);
             if (value != null)
             {
-                // Kopiuj dane do formularza
+                // kopiuje dane do formularza
                 EditedAddress = new Address
                 {
                     Id = value.Id,
@@ -67,7 +67,7 @@ public partial class AddressesPageViewModel : ViewModelBase
             string.IsNullOrWhiteSpace(EditedAddress.Country))
             return;
 
-        // walidacja dla kodu pocztowego (12-345 cyfry)
+        // walidacja dla kodu pocztowego (12-345)
         if (!Regex.IsMatch(EditedAddress.PostalCode, @"^\d{2}-\d{3}$"))
         {
             return;
@@ -75,6 +75,12 @@ public partial class AddressesPageViewModel : ViewModelBase
 
         // walidacja dla miasta (po prostu bez cyfr i znakow specjalnych)
         if (!Regex.IsMatch(EditedAddress.City, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
+        {
+            return;
+        }
+
+        // walidacja dla kraju (bez cyfr i znakow specjalnych)
+        if (!Regex.IsMatch(EditedAddress.Country, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
         {
             return;
         }
@@ -90,7 +96,7 @@ public partial class AddressesPageViewModel : ViewModelBase
     {
         if (SelectedAddress == null) return;
 
-        // walidacja dla kodu pocztowego (12-345 cyfry)
+        // walidacja dla kodu pocztowego (12-345)
         if (!Regex.IsMatch(EditedAddress.PostalCode, @"^\d{2}-\d{3}$"))
         {
             return;
@@ -100,7 +106,14 @@ public partial class AddressesPageViewModel : ViewModelBase
         if (!Regex.IsMatch(EditedAddress.City, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
         {
             return;
-        } 
+        }
+
+        // walidacja dla kraju (bez cyfr i znakow specjalnych)
+        if (!Regex.IsMatch(EditedAddress.Country, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
+        {
+            return;
+        }
+
         var address = _dbContext.Addresses.Find(SelectedAddress.Id);
         if (address != null)
         {
@@ -110,6 +123,8 @@ public partial class AddressesPageViewModel : ViewModelBase
             address.Country = EditedAddress.Country;
 
             _dbContext.SaveChanges();
+            // aktualizuje mi datagrid w momencie aktualizacji zwierza (inaczej by go zaktualizowalo, i musialbym zmienic zakladke)
+            _dbContext.Entry(address).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             LoadAddresses();
         }
     }
@@ -124,7 +139,13 @@ public partial class AddressesPageViewModel : ViewModelBase
         var hasAdoptions = _dbContext.Adoptions?.Any(a => a.AddressId == SelectedAddress.Id) ?? false;
         if (hasAdoptions)
         {
-            // nie usunie adresu skoro jest uzyty w adopcjach
+            return;
+        }
+
+        // sprawdza czy wybrany adres nie jest czasem uzyty przez wolontariuszy
+        var hasVolunteers = _dbContext.Volunteers?.Any(v => v.AddressId == SelectedAddress.Id) ?? false;
+        if (hasVolunteers)
+        {
             return;
         }
 

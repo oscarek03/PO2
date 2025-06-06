@@ -20,7 +20,7 @@ public partial class AnimalsPageViewModel : ViewModelBase
             SetProperty(ref _selectedAnimal, value);
             if (value != null)
             {
-                // Kopiuj dane do formularza
+                // kopiuje dane do formularza
                 EditedAnimal = new Animal
                 {
                     Id = value.Id,
@@ -49,6 +49,7 @@ public partial class AnimalsPageViewModel : ViewModelBase
     public AnimalsPageViewModel(AnimalShelterDbContext dbContext)
     {
         _dbContext = dbContext;
+
         LoadAnimals();
         ClearForm();
     }
@@ -105,6 +106,8 @@ public partial class AnimalsPageViewModel : ViewModelBase
             animal.IsAdopted = EditedAnimal.IsAdopted;
 
             _dbContext.SaveChanges();
+            // aktualizuje mi datagrid w momencie aktualizacji zwierza (inaczej by go zaktualizowalo, i musialbym zmienic zakladke)
+            _dbContext.Entry(animal).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             LoadAnimals();
         }
     }
@@ -125,7 +128,6 @@ public partial class AnimalsPageViewModel : ViewModelBase
         LoadAnimals();
         ClearForm();
     }
-
 
     // czysci formularz z danych zeby nie robic tego recznie
     public void ClearForm()

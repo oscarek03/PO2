@@ -21,6 +21,7 @@ public class Volunteer
     
     public Address? Address { get; set; }
     
+    
     public string? AddressStreetAddress => Address?.StreetAddress;
     public string? AddressCity => Address?.City;
     public string? AddressPostalCode => Address?.PostalCode;
