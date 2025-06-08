@@ -64,10 +64,31 @@ public partial class AnimalsPageViewModel : ViewModelBase
             Animals.Add(animal);
         }
     }
+    
+    private string _alertText = string.Empty;
+    public string AlertText
+    {
+        get => _alertText;
+        set
+        {
+            _alertText = value;
+            OnPropertyChanged(nameof(AlertText));
+        }
+    }
 
     // dodaje nowe zwierze do bazy (z formularza, po czym aktualizuje liste)
     public void AddAnimal()
     {
+        
+        bool alreadyExists = _dbContext.Animals.Any(a => a.Microchip == EditedAnimal.Microchip);
+
+
+        if (alreadyExists)
+        {
+            AlertText = "You already have an animal with this microchip.";
+            return;
+        }
+
         if (string.IsNullOrWhiteSpace(EditedAnimal.Name) ||
             string.IsNullOrWhiteSpace(EditedAnimal.Species) ||
             string.IsNullOrWhiteSpace(EditedAnimal.Breed) ||
@@ -76,10 +97,12 @@ public partial class AnimalsPageViewModel : ViewModelBase
             string.IsNullOrWhiteSpace(EditedAnimal.Color) ||
             string.IsNullOrWhiteSpace(EditedAnimal.Size) ||
             string.IsNullOrWhiteSpace(EditedAnimal.Microchip) ||
-            string.IsNullOrWhiteSpace(EditedAnimal.Location)) 
+            string.IsNullOrWhiteSpace(EditedAnimal.Location))
+        {
+            AlertText = "Please fill in all fields.";
             return;
-
-
+        }
+        
         _dbContext.Animals.Add(EditedAnimal);
         _dbContext.SaveChanges();
         LoadAnimals();
@@ -92,6 +115,7 @@ public partial class AnimalsPageViewModel : ViewModelBase
         if (SelectedAnimal == null) return;
 
         var animal = _dbContext.Animals.Find(SelectedAnimal.Id);
+        
         if (animal != null)
         {
             animal.Name = EditedAnimal.Name;

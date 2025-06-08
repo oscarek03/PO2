@@ -41,6 +41,7 @@
             <Border BorderBrush="Gray" BorderThickness="1" Margin="20" Padding="20" CornerRadius="5">
                 <StackPanel>
                     <TextBlock Text="Animal Details" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+                    <TextBlock Text="{Binding AlertText}" FontSize="10" FontWeight="Bold" Margin="0,0,0,15"/>
                     
                     <Grid>
                         <Grid.ColumnDefinitions>

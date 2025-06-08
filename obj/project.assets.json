@@ -522,6 +522,19 @@
           }
         }
       },
+      "MessageBoxSlim.Avalonia/0.9.8": {
+        "type": "package",
+        "dependencies": {
+          "Avalonia": "0.9.11",
+          "Avalonia.ReactiveUI": "0.9.11"
+        },
+        "compile": {
+          "lib/netstandard2.0/MessageBoxSlim.Avalonia.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MessageBoxSlim.Avalonia.dll": {}
+        }
+      },
       "MicroCom.Runtime/0.11.0": {
         "type": "package",
         "compile": {
@@ -2697,6 +2710,18 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "MessageBoxSlim.Avalonia/0.9.8": {
+      "sha512": "h8bZPddp8wdRvBriFSdYKGl0VJIPZ++glIAIFgZ4Wofm6OEmL1Z6DtUjV8uYgtOz/Iy50w9YpQHmOqS8ObmB+w==",
+      "type": "package",
+      "path": "messageboxslim.avalonia/0.9.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/MessageBoxSlim.Avalonia.dll",
+        "messageboxslim.avalonia.0.9.8.nupkg.sha512",
+        "messageboxslim.avalonia.nuspec"
       ]
     },
     "MicroCom.Runtime/0.11.0": {
@@ -5351,6 +5376,7 @@
       "Avalonia.Svg.Skia >= 11.2.7",
       "Avalonia.Themes.Fluent >= 11.2.7",
       "CommunityToolkit.Mvvm >= 8.2.1",
+      "MessageBoxSlim.Avalonia >= 0.9.8",
       "Microsoft.EntityFrameworkCore >= 9.0.4",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.4",
       "Microsoft.EntityFrameworkCore.Sqlite >= 9.0.4",
@@ -5445,6 +5471,10 @@
           "CommunityToolkit.Mvvm": {
             "target": "Package",
             "version": "[8.2.1, )"
+          },
+          "MessageBoxSlim.Avalonia": {
+            "target": "Package",
+            "version": "[0.9.8, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",

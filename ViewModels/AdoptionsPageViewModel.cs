@@ -94,11 +94,29 @@ public partial class AdoptionsPageViewModel : ViewModelBase
             ExistingAddresses.Add(address);
     }
 
-// dodaje nowa adopcje do bazy (dane bierze z formularza ofc), oznacza flage adopcji na true i aktualizuje liste
+    
+    private string _alertText = string.Empty;
+    public string AlertText
+    {
+        get => _alertText;
+        set
+        {
+            _alertText = value;
+            OnPropertyChanged(nameof(AlertText));
+        }
+    }
+    // dodaje nowa adopcje do bazy (dane bierze z formularza ofc), oznacza flage adopcji na true i aktualizuje liste
     public void AddAdoption()
     {
-        if (SelectedAnimal == null || SelectedAddress == null || string.IsNullOrWhiteSpace(EditedAdoption.FullName))
+        if (SelectedAnimal == null 
+            || SelectedAddress == null 
+            || string.IsNullOrWhiteSpace(EditedAdoption.FullName) 
+            || string.IsNullOrWhiteSpace(EditedAdoption.Email) 
+            || string.IsNullOrWhiteSpace(EditedAdoption.PhoneNumber))
+        {
+            AlertText = "Please fill in all fields.";
             return;
+        }
 
         // sprawdzenie czy dany pies juz nie jest adoptowany
         var animal = _dbContext.Animals.Find(SelectedAnimal.Id);

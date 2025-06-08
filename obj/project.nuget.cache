@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "AGoEFnSZwsk=",
+  "dgSpecHash": "oktdjIz27FY=",
   "success": true,
   "projectFilePath": "C:\\Users\\oszcz\\Desktop\\c--animal-shelter\\AnimalShelter.csproj",
   "expectedPackageFiles": [
@@ -31,6 +31,7 @@
     "C:\\Users\\oszcz\\.nuget\\packages\\harfbuzzsharp.nativeassets.webassembly\\7.3.0.3\\harfbuzzsharp.nativeassets.webassembly.7.3.0.3.nupkg.sha512",
     "C:\\Users\\oszcz\\.nuget\\packages\\harfbuzzsharp.nativeassets.win32\\7.3.0.3\\harfbuzzsharp.nativeassets.win32.7.3.0.3.nupkg.sha512",
     "C:\\Users\\oszcz\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\oszcz\\.nuget\\packages\\messageboxslim.avalonia\\0.9.8\\messageboxslim.avalonia.0.9.8.nupkg.sha512",
     "C:\\Users\\oszcz\\.nuget\\packages\\microcom.runtime\\0.11.0\\microcom.runtime.0.11.0.nupkg.sha512",
     "C:\\Users\\oszcz\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
     "C:\\Users\\oszcz\\.nuget\\packages\\microsoft.build.framework\\17.8.3\\microsoft.build.framework.17.8.3.nupkg.sha512",

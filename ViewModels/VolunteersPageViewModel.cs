@@ -1,8 +1,13 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics.Contracts;
 using AnimalShelter.Models;
 using AnimalShelter.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
+using MessageBoxSlim.Avalonia;
+using MessageBoxSlim.Avalonia.Enums;
+using Tmds.DBus.Protocol;
+using Address = AnimalShelter.Models.Address;
 
 
 namespace AnimalShelter.ViewModels;
@@ -84,39 +89,64 @@ public partial class VolunteersPageViewModel : ViewModelBase
             Addresses.Add(address);
         }
     }
-
-    public void AddVolunteer()
-{
-    if (string.IsNullOrWhiteSpace(EditedVolunteer.FullName) || SelectedAddress == null)
-        return;
-
-    // walidacja dla emaila
-    if (!string.IsNullOrWhiteSpace(EditedVolunteer.Email) &&
-        !Regex.IsMatch(EditedVolunteer.Email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
+    
+    private string _alertText = string.Empty;
+    public string AlertText
     {
-        return;
+        get => _alertText;
+        set
+        {
+            _alertText = value;
+            OnPropertyChanged(nameof(AlertText));
+        }
     }
 
-    // walidacja dla nr tel (123456789)
-    if (!string.IsNullOrWhiteSpace(EditedVolunteer.PhoneNumber) &&
-        !Regex.IsMatch(EditedVolunteer.PhoneNumber, @"^\d{9}$"))
-    {
-        return;
-    }
 
-    var newVolunteer = new Volunteer
-    {
-        FullName = EditedVolunteer.FullName,
-        Email = EditedVolunteer.Email,
-        PhoneNumber = EditedVolunteer.PhoneNumber,
-        AdditionalNotes = EditedVolunteer.AdditionalNotes,
-        AddressId = SelectedAddress.Id
-    };
+    public void AddVolunteer() {
+        bool alreadyExists = _dbContext.Volunteers.Any(v => v.FullName == EditedVolunteer.FullName && v.PhoneNumber == EditedVolunteer.PhoneNumber && v.AddressId == EditedVolunteer.AddressId);
 
-    _dbContext.Volunteers.Add(newVolunteer);
-    _dbContext.SaveChanges();
-    LoadVolunteers();
-    ClearForm();
+
+        if (alreadyExists)
+        {
+            AlertText = "You already have a volunteer with this name and phone number.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(EditedVolunteer.FullName) || SelectedAddress == null)
+        {
+            AlertText = "Please fill in all fields.";
+            return;
+        }
+
+        // walidacja dla emaila
+        if (!string.IsNullOrWhiteSpace(EditedVolunteer.Email) &&
+            !Regex.IsMatch(EditedVolunteer.Email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
+        {
+            AlertText = "Please enter a valid email address.";
+            return;
+        }
+
+        // walidacja dla nr tel (123456789)
+        if (!string.IsNullOrWhiteSpace(EditedVolunteer.PhoneNumber) &&
+            !Regex.IsMatch(EditedVolunteer.PhoneNumber, @"^\d{9}$"))
+        {
+            AlertText = "Please enter a valid phone number.";
+            return;
+        }
+
+        var newVolunteer = new Volunteer
+        {
+            FullName = EditedVolunteer.FullName,
+            Email = EditedVolunteer.Email,
+            PhoneNumber = EditedVolunteer.PhoneNumber,
+            AdditionalNotes = EditedVolunteer.AdditionalNotes,
+            AddressId = SelectedAddress.Id
+        };
+
+        _dbContext.Volunteers.Add(newVolunteer);
+        _dbContext.SaveChanges();
+        LoadVolunteers();
+        ClearForm();
 }
 
 public void UpdateVolunteer()
@@ -128,7 +158,7 @@ public void UpdateVolunteer()
     if (!string.IsNullOrWhiteSpace(EditedVolunteer.Email) &&
         !Regex.IsMatch(EditedVolunteer.Email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
     {
-        // email niepoprawny
+        AlertText = "Please enter a valid email address.";
         return;
     }
 
@@ -136,7 +166,7 @@ public void UpdateVolunteer()
     if (!string.IsNullOrWhiteSpace(EditedVolunteer.PhoneNumber) &&
         !Regex.IsMatch(EditedVolunteer.PhoneNumber, @"^\d{9}$"))
     {
-        // numer niepoprawny
+        AlertText = "Please enter a valid phone number.";
         return;
     }
 

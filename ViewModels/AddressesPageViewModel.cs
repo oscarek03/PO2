@@ -58,30 +58,50 @@ public partial class AddressesPageViewModel : ViewModelBase
         }
     }
 
+    private string _alertText = string.Empty;
+    public string AlertText
+    {
+        get => _alertText;
+        set
+        {
+            _alertText = value;
+            OnPropertyChanged(nameof(AlertText));
+        }
+    }
+    
     // dodanie nowego adresu do bazy
     public void AddAddress()
     {
-        if (string.IsNullOrWhiteSpace(EditedAddress.StreetAddress) || 
-            string.IsNullOrWhiteSpace(EditedAddress.City) ||
-            string.IsNullOrWhiteSpace(EditedAddress.PostalCode) ||
-            string.IsNullOrWhiteSpace(EditedAddress.Country))
+        bool alreadyExists = _dbContext.Addresses.Any(a => a.StreetAddress == EditedAddress.StreetAddress);
+
+
+        if (alreadyExists)
+        {
+            AlertText = "You already have an address with this street address.";
             return;
+        } 
 
         // walidacja dla kodu pocztowego (12-345)
-        if (!Regex.IsMatch(EditedAddress.PostalCode, @"^\d{2}-\d{3}$"))
+        if (string.IsNullOrWhiteSpace(EditedAddress.PostalCode) 
+            || !Regex.IsMatch(EditedAddress.PostalCode, @"^\d{2}-\d{3}$"))
         {
+            AlertText = "Please enter a valid postal code.";
             return;
         }
 
         // walidacja dla miasta (po prostu bez cyfr i znakow specjalnych)
-        if (!Regex.IsMatch(EditedAddress.City, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
+        if (string.IsNullOrWhiteSpace(EditedAddress.City)
+            || !Regex.IsMatch(EditedAddress.City, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$") )
         {
+            AlertText = "Please enter a valid city.";
             return;
         }
 
         // walidacja dla kraju (bez cyfr i znakow specjalnych)
-        if (!Regex.IsMatch(EditedAddress.Country, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
+        if (string.IsNullOrWhiteSpace(EditedAddress.Country) 
+            || !Regex.IsMatch(EditedAddress.Country, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
         {
+            AlertText = "Please enter a valid country.";
             return;
         }
 
@@ -97,20 +117,26 @@ public partial class AddressesPageViewModel : ViewModelBase
         if (SelectedAddress == null) return;
 
         // walidacja dla kodu pocztowego (12-345)
-        if (!Regex.IsMatch(EditedAddress.PostalCode, @"^\d{2}-\d{3}$"))
+        if (string.IsNullOrWhiteSpace(EditedAddress.PostalCode)
+            || !Regex.IsMatch(EditedAddress.PostalCode, @"^\d{2}-\d{3}$"))
         {
+            AlertText = "Please enter a valid postal code.";
             return;
         }
 
         // walidacja dla miasta (po prostu bez cyfr i znakow specjalnych)
-        if (!Regex.IsMatch(EditedAddress.City, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
+        if (string.IsNullOrWhiteSpace(EditedAddress.City)
+            || !Regex.IsMatch(EditedAddress.City, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
         {
+            AlertText = "Please enter a valid city.";
             return;
         }
 
         // walidacja dla kraju (bez cyfr i znakow specjalnych)
-        if (!Regex.IsMatch(EditedAddress.Country, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
+        if (string.IsNullOrWhiteSpace(EditedAddress.Country)
+            || !Regex.IsMatch(EditedAddress.Country, @"^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\-]+$"))
         {
+            AlertText = "Please enter a valid country.";
             return;
         }
 
